@@ -1,0 +1,56 @@
+{
+  "name": "alphazooloader",
+  "version": "0.8.0",
+  "description": "game loader",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron .",
+    "build-game": "electron-builder -mwl"
+  },
+  "author": "AlphaZoo",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "15.0.0",
+    "electron-builder": "^22.11.7",
+    "electron-notarize": "^1.1.1",
+    "electron-settings": "^4.0.2"
+  },
+  "dependencies": {
+    "electron-settings": "^4.0.2"
+  },
+  "build": {
+    "appId": "com.electron.alphazoo",
+    "productName": "AlphaZooLoader",
+    "copyright": "Copyright 2022 AlphaZoo LLC",
+    "afterSign": "notarize.js",
+    "directories": {
+      "output": "../LoaderBuild/AlphaZooLoader/"
+    },
+    "dmg": {
+      "sign": false,
+      "contents": [
+        {
+          "x": 320,
+          "y": 240
+        }
+      ]
+    },
+    "mac": {
+      "category": "public.app-category.educational-games",
+      "target": "dmg",
+      "hardenedRuntime": true,
+      "gatekeeperAssess": false,
+      "entitlements": "entitlements.mac.plist",
+      "entitlementsInherit": "entitlements.mac.plist"
+    },
+    "win": {
+      "target": "nsis"
+    },
+    "linux": {
+      "target": "AppImage",
+      "executableName": "AlphaZoo",
+      "category": "ArcadeGame"
+    }
+  }
+}

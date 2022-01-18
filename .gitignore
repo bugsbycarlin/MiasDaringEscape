@@ -1,0 +1,8 @@
+Release/
+LoaderBuild/
+Reference/
+Video/
+Screenshots/
+LoaderSource/node_modules/
+Game/node_modules/
+.DS_Store

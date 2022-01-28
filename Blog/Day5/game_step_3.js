@@ -51,7 +51,7 @@ function initializeGame() {
     }
   }
 
-  for (num = 1; num < 8; num += 1) {
+  for (num = 1; num <= 8; num += 1) {
     
     // pick a random column,
     let column = 5 + dice(65);
@@ -68,6 +68,16 @@ function initializeGame() {
       shako.spear_up.anchor.set(0.5, 1);
       shako.addChild(shako.spear_up);
 
+      shako.position.set(120 * column, game_height - 36);
+      shako.y_velocity = 0;
+      shako.x_velocity = 0;
+      shako.state = "ground";
+      shako.ground_time = 0;
+      shako.jumps = 0;
+
+      stage.addChild(shako);
+      shakos.push(shako);
+
       shako.setStance = function(stance) {
         if (stance == "up") {
           shako.stance = "up";
@@ -81,13 +91,6 @@ function initializeGame() {
       }
 
       shako.setStance("up");
-      shako.stud = column * 4 + dice(4);
-      shako.position.set(120 * shako.stud/4, game_height - 36);
-      shako.y_velocity = 0;
-      shako.x_velocity = 0;
-      shako.state = 0;
-      stage.addChild(shako);
-      shakos.push(shako);
     }
   }
 
@@ -195,35 +198,46 @@ function dropBricks() {
       }
     }
   }
-}
 
+  // Delete every brick that's hit a shako.
+  // Note that we run the loop BACKWARDS.
+  for (brick_num = bricks.length - 1; brick_num >= 0; brick_num += -1) {
+    let brick = bricks[brick_num];
 
-function updateShakos() {
-  for (let i = 0; i < shakos.length; i++) {
-    let shako = shakos[i];
+    if (brick.y_velocity > 0) {
+      // By default, assume the brick hasn't hit a shako
+      let hit_a_shako = false;
 
-    if (shako.state != "jumping" && shako.state != "kaput") {
-      shako.scale.y = 1 - shako.state / 70;
-      shako.state += 1;
-      if (shako.state == 5) {
-        shako.state = "jumping";
-        shako.y_velocity = -5;
-        shako.scale.y = 1;
+      // Loop through all the shakos
+      for (shako_num = 0; shako_num < shakos.length; shako_num += 1) {
+        let shako = shakos[shako_num];
+        
+        // If the shako and the brick are close together,
+        if (Math.abs(shako.x - brick.x) <= 60 && brick.y > game_height - 36 - 160) {
+          hit_a_shako = true;
+        }
       }
-    }
 
-    if (shako.state == "jumping") {
-      if (shako.y_velocity < 0) {
-        shako.scale.y = Math.min(1,1 + shako.y_velocity / 70);
-      } else {
-        shako.scale.y = 1;
-      }
-      shako.y += shako.y_velocity;
-      shako.y_velocity += 0.5;
-      if (shako.y > game_height - 36) {
-        shako.y = game_height - 36;
-        shako.y_velocity = 0;
-        shako.state = 0;
+      // If the brick has touched any shako, hit_a_shako will be true.
+      if (hit_a_shako) {
+
+        // This line is like "delete item number such and such from the list"
+        bricks.splice(brick_num, 1);
+
+        // Remove the brick from the stage
+        stage.removeChild(brick);
+
+        // Make a bunch of little brick debris!
+        makeBrickBit(stage, brick.x - 45, brick.y, brick.tint);
+        makeBrickBit(stage, brick.x - 15, brick.y, brick.tint);
+        makeBrickBit(stage, brick.x + 15, brick.y, brick.tint);
+        makeBrickBit(stage, brick.x + 45, brick.y, brick.tint);
+
+        // If mia is close enough, make some popping sounds.
+        if (Math.abs(brick.x - mia.x) < 700) {
+          soundEffect("pop_1");
+          soundEffect("pop_2");
+        }
       }
     }
   }
@@ -347,8 +361,6 @@ function updateGame(diff) {
     }
   }
 
-  updateShakos();
-
   testBricks();
 
   if (mia.y > 1200) {
@@ -361,4 +373,5 @@ function updateGame(diff) {
 
   followMia();
 }
+
 

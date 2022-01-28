@@ -97,6 +97,7 @@ function initializePixi() {
     last_frame = now
 
     TWEEN.update(now);
+    preUpdate();
     updateGame(diff);
     ticker.update(now);
     pixi.renderer.render(pixi.stage);
@@ -110,6 +111,31 @@ function initializePixi() {
   // Web code which tells the web page to "listen" for keys being pressed down and keys being let up.
   document.addEventListener("keydown", function(event) {handleKeyDownEvent(event)}, false);
   document.addEventListener("keyup", function(event) {handleKeyUpEvent(event)}, false);
+}
+
+
+
+// This function does any background updating we need done before the main game update.
+function preUpdate() {
+  for (let i = 0; i < bits.length; i++) {
+    let bit = bits[i];
+    bit.y += bit.y_velocity;
+    bit.x += bit.x_velocity;
+    bit.y_velocity += 0.8;
+  }
+
+  let new_bits = [];
+  for (let i = 0; i < bits.length; i++) {
+    let bit = bits[i];
+    if (bit.y < 1000) {
+      new_bits.push(bit);
+    } else {
+      if (bit != null && bit.parent != null) {
+        bit.parent.removeChild(bit);
+      }
+    }
+  }
+  bits = new_bits;
 }
 
 
@@ -185,6 +211,24 @@ function makeSmoke(parent, x, y, xScale, yScale) {
   }
   smoke_sprite.play();
   return smoke_sprite;
+}
+
+
+
+// This function makes a brick bit effect.
+// Note that you can give it extra information, such
+// as location and tint
+bits = [];
+function makeBrickBit(parent, x, y, tint) {
+  let bit = new PIXI.Sprite(PIXI.Texture.from("Art/brick_bit.png"));
+  bit.anchor.set(0.5,1);
+  bit.position.set(x, y);
+  bit.tint = tint;
+  bit.y_velocity = -3 - 3 * Math.random();
+  bit.x_velocity = -5 + 10 * Math.random();
+  parent.addChild(bit);
+  bits.push(bit);
+  return bit;
 }
 
 

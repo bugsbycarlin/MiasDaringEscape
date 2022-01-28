@@ -6,7 +6,6 @@
 
 let mia = null;
 let bricks = [];
-let shakos = [];
 let stacks = {};
 let colors = [
   color(1,0,0), // Red
@@ -48,48 +47,6 @@ function initializeGame() {
     }
     else {
       stacks[num] = -100;
-    }
-  }
-
-  for (num = 1; num < 10; num += 1) {
-    
-    // pick a random column,
-    let column = 5 + dice(65);
-
-    // and only make the shako if that column isn't a pit.
-    if (stacks[column] > 0) {
-
-      let shako = makeContainer();
-      shako.spear_forward = makeSprite("Art/shako_spear_forward.png");
-      shako.spear_forward.anchor.set(0.5, 1);
-      shako.addChild(shako.spear_forward);
-
-      shako.spear_up = makeSprite("Art/shako_spear_up.png");
-      shako.spear_up.anchor.set(0.5, 1);
-      shako.addChild(shako.spear_up);
-
-      shako.setStance = function(stance) {
-        if (stance == "up") {
-          shako.stance = "up";
-          shako.spear_up.visible = true;
-          shako.spear_forward.visible = false;
-        } else if (stance == "forward") {
-          shako.stance = "forward";
-          shako.spear_up.visible = false;
-          shako.spear_forward.visible = true;
-        }
-      }
-
-      shako.setStance("up");
-      shako.stud = column * 4 + dice(4);
-      shako.position.set(120 * shako.stud/4, game_height - 36);
-      shako.y_velocity = 0;
-      shako.x_velocity = 0;
-      shako.state = "ground";
-      shako.ground_time = 0;
-      shako.jumps = 0;
-      stage.addChild(shako);
-      shakos.push(shako);
     }
   }
 
@@ -197,89 +154,10 @@ function dropBricks() {
       }
     }
   }
-
-  // Delete every brick that's hit a shako.
-  // We do this by copying everything in the list except those bricks.
-  let new_bricks = [];
-  for (i = 0; i < bricks.length; i += 1) {
-    let brick = bricks[i];
-
-    if (brick.y_velocity == 0) {
-      new_bricks.push(brick);
-    } else {
-      let brick_meets_shako = false;
-      for (j = 0; j < shakos.length; j += 1) {
-        let shako = shakos[j];
-        if (Math.abs(shako.x - brick.x) <= 60 && brick.y > game_height - 36 - 180) {
-          brick_meets_shako = true;
-        }
-      }
-      if (brick_meets_shako == false) {
-        new_bricks.push(brick);
-      } else {
-        stage.removeChild(brick);
-      }
-    }
-  }
-  bricks = new_bricks;
 }
 
 
-function updateShakos() {
-  for (let i = 0; i < shakos.length; i += 1) {
-    let shako = shakos[i];
-
-    if (shako.state == "ground") {
-      shako.scale.y = 1 - shako.ground_time / 70;
-      shako.ground_time += 1;
-      if (shako.ground_time == 5) {
-        shako.state = "jumping";
-        shako.y_velocity = -5;
-        shako.scale.y = 1;
-      }
-    }
-
-    if (shako.state == "jumping") {
-      if (shako.y_velocity < 0) {
-        shako.scale.y = Math.min(1,1 + shako.y_velocity / 70);
-      } else {
-        shako.scale.y = 1;
-      }
-      shako.y += shako.y_velocity;
-      shako.y_velocity += 0.5;
-      if (shako.scale.x == 1) shako.x -= 30/22;
-      if (shako.scale.x == -1) shako.x += 30/22;
-      if (shako.y > game_height - 36) {
-        shako.y = game_height - 36;
-        shako.y_velocity = 0;
-        shako.state = "ground";
-        shako.ground_time = 0;
-        shako.jumps += 1;
-        if (shako.jumps % 6 == 0) shako.setStance("up");
-        if (shako.jumps % 6 == 3) shako.setStance("forward");
-        if (dice(100) < 10) {
-          shako.scale.x = -1 * shako.scale.x;
-          shako.x -= 30 * shako.scale.x;
-        }
-
-        let next_column = Math.floor((shako.x - 30 * shako.scale.x + 60) / 120);
-        if (next_column < 0 || next_column > 70 || stacks[next_column] != 1) {
-          shako.scale.x = -1 * shako.scale.x;
-          shako.x -= 30 * shako.scale.x;
-        }
-
-      }
-    }
-
-    if (shako.state == "kaput") {
-      shako.y += shako.y_velocity;
-      shako.y_velocity += 0.8;
-    }
-  }
-}
-
-
-function testMia() {
+function testBricks() {
 
   // Don't test anything if Mia is already kaput
   if (mia.state == "kaput") return;
@@ -331,45 +209,6 @@ function testMia() {
         mia.scale.y = -1;
         mia.y_velocity = -5;
         mia.y = mia.y - 175;
-      }
-    }
-  }
-
-  // Check Mia's collisions with the shakos
-  for (i = 0; i < shakos.length; i += 1) {
-    let shako = shakos[i];
-
-    if (shako.state != "kaput" && mia.state != "kaput") {
-
-      if (shako.stance == "forward") {
-        let collision = false;
-        if (shako.scale.x == 1 && mia.x < shako.x && mia.x > shako.x - 120
-          && mia.y < game_height - 36 && mia.y > game_height - 36 - 180) {
-          collision = true;
-        }
-
-        if (shako.scale.x == -1 && mia.x > shako.x && mia.x < shako.x + 120
-          && mia.y < game_height - 36 && mia.y > game_height - 36 - 180) {
-          collision = true;
-        }
-
-        if (collision) {
-          console.log("Shako hit!");
-          console.log(shako.stance);
-          console.log(shako.x);
-          console.log(shako.y);
-          console.log(shako.scale.x);
-          console.log(shako.scale.y);
-          console.log(shako.state);
-          console.log(shako.visible);
-          console.log(shako.spear_forward.visible);
-          console.log(shako.spear_up.visible);
-          console.log(shako);
-          mia.setState("kaput");
-          mia.scale.y = -1;
-          mia.y_velocity = -5;
-          mia.y = mia.y - 175;
-        }
       }
     }
   }
@@ -435,17 +274,16 @@ function updateGame(diff) {
     }
   }
 
-  updateShakos();
-
-  testMia();
+  testBricks();
 
   if (mia.y > 1200) {
     stage.removeChildren();
     bricks = [];
-    shakos = [];
     stacks = {};
     initializeGame();
   }
 
   followMia();
 }
+
+

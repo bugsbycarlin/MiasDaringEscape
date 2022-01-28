@@ -51,7 +51,7 @@ function initializeGame() {
     }
   }
 
-  for (num = 1; num < 8; num += 1) {
+  for (num = 1; num <= 8; num += 1) {
     
     // pick a random column,
     let column = 5 + dice(65);
@@ -68,6 +68,16 @@ function initializeGame() {
       shako.spear_up.anchor.set(0.5, 1);
       shako.addChild(shako.spear_up);
 
+      shako.position.set(120 * column, game_height - 36);
+      shako.y_velocity = 0;
+      shako.x_velocity = 0;
+      shako.state = "ground";
+      shako.ground_time = 0;
+      shako.jumps = 0;
+
+      stage.addChild(shako);
+      shakos.push(shako);
+
       shako.setStance = function(stance) {
         if (stance == "up") {
           shako.stance = "up";
@@ -81,15 +91,6 @@ function initializeGame() {
       }
 
       shako.setStance("up");
-      shako.stud = column * 4 + dice(4);
-      shako.position.set(120 * shako.stud/4, game_height - 36);
-      shako.y_velocity = 0;
-      shako.x_velocity = 0;
-      shako.state = "ground";
-      shako.ground_time = 0;
-      shako.jumps = 0;
-      stage.addChild(shako);
-      shakos.push(shako);
     }
   }
 

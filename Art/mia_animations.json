@@ -125,12 +125,22 @@
 	"spriteSourceSize": {"x":0,"y":0,"w":256,"h":256},
 	"sourceSize": {"w":256,"h":256},
 	"anchor": {"x":0.5,"y":0.5}
+},
+"blasting.png":
+{
+	"frame": {"x":512,"y":768,"w":256,"h":256},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":256,"h":256},
+	"sourceSize": {"w":256,"h":256},
+	"anchor": {"x":0.5,"y":0.5}
 }},
 "animations": {
 	"fall": ["fall_1.png","fall_2.png"],
 	"run": ["run_00.png","run_01.png","run_02.png","run_03.png","run_04.png","run_05.png","run_06.png","run_07.png","run_08.png","run_09.png"],
 	"rise": ["rise.png"],
-	"idle": ["idle.png"]
+	"idle": ["idle.png"],
+	"blasting": ["blasting.png"]
 },
 "meta": {
 	"app": "https://www.codeandweb.com/texturepacker",

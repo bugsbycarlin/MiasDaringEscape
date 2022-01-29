@@ -1,0 +1,609 @@
+Game Jam da Quarentena - Dia 1
+https://www.alphazoollc.com/blog/quarantine-game-jam-day-1/
+
+<!-- wp:paragraph -->
+<p>(Tempo de atividade: aproximadamente 60 minutos)</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>(<a href="https://alphazoollc.com/GameJam/Day1.zip" title="Download the Day One Files Here">Baixe os arquivos do Dia 1 aqui</a>)</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>Introdução</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Olá e seja bem vindo ao tutorial Game Jam da Quarentena de Pai e Filha!</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"align":"center","id":87,"sizeSlug":"full","linkDestination":"none"} -->
+<div class="wp-block-image"><figure class="aligncenter size-full"><img src="https://www.alphazoollc.com/blog/wp-content/uploads/2022/01/whateverthisis.gif" alt="" class="wp-image-87"/></figure></div>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Este tutorial de aproximadamente sete dias vai levá-lo, o pai em quarentena que sabe <em>apenas um pouco</em> de programação e a filha em quarentena que quer fazer jogos, do zero a um <strong>joguinho fofinho</strong>.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Obviamente mães e filhos, bem como outras combinações de pessoas, podem fazer parte deste Jam. Você provavelmente nem mesmo precisa estar confinado em casa. Mas eu escrevo sobre minha realidade.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Nós vamos fazer um jogo chamado <strong>Fuga Ousada da Mia</strong>. Ele parece mais ou menos com isso:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"align":"center","id":106,"sizeSlug":"full","linkDestination":"none"} -->
+<div class="wp-block-image"><figure class="aligncenter size-full"><img src="https://www.alphazoollc.com/blog/wp-content/uploads/2022/01/mia_jumping.gif" alt="" class="wp-image-106"/></figure></div>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p>A Mia é uma astronauta explorando um estranho planeta, quando é pega numa tempestade de tijolos de plástico. Ajude-a a correr de volta para seu foguete antes que ela seja atingida na cabeça.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Este tutorial terá seções para o pai e seções para a filha.&nbsp;</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:media-text {"mediaId":97,"mediaLink":"https://www.alphazoollc.com/blog/?attachment_id=97","mediaType":"image","mediaWidth":15,"verticalAlignment":"top","style":{"color":{"background":"#ede193"}}} -->
+<div class="wp-block-media-text alignwide is-stacked-on-mobile is-vertically-aligned-top has-background" style="background-color:#ede193;grid-template-columns:15% auto"><figure class="wp-block-media-text__media"><img src="https://www.alphazoollc.com/blog/wp-content/uploads/2022/01/dad.png" alt="" class="wp-image-97 size-full"/></figure><div class="wp-block-media-text__content"><!-- wp:paragraph -->
+<p><meta charset="utf-8">Você terá acesso a um framework desenvolvido especificamente para este propósito, a fim de facilitar as coisas. Mas você vai aprender um pouco de JavaScript de verdade.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Se você e sua filha fizerem mais jogos e você tiver um espacinho online você pode hospedar seus jogos e quase qualquer pessoa poderá jogá-lo em um navegador.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Você pode ensinar o quanto achar apropriado deste quadro amarelo à sua filha.</p>
+<!-- /wp:paragraph --></div></div>
+<!-- /wp:media-text -->
+
+<!-- wp:media-text {"mediaId":98,"mediaLink":"https://www.alphazoollc.com/blog/?attachment_id=98","mediaType":"image","mediaWidth":15,"verticalAlignment":"top","style":{"color":{"background":"#7cd4f9"}}} -->
+<div class="wp-block-media-text alignwide is-stacked-on-mobile is-vertically-aligned-top has-background" style="background-color:#7cd4f9;grid-template-columns:15% auto"><figure class="wp-block-media-text__media"><img src="https://www.alphazoollc.com/blog/wp-content/uploads/2022/01/daughter.png" alt="" class="wp-image-98 size-full"/></figure><div class="wp-block-media-text__content"><!-- wp:paragraph {"placeholder":"Content…"} -->
+<p>Você aprenderá como computadores transformam números em jogos. Você aprenderá como pessoas como você (sim, você!) usam frases cuidadosamente escritas e vários números para dizer aos computadores como executar jogos. Isso envolve muita mágica e muita tentativa e erro. <br><br>Lembre-se também, criança, seu pai está aprendendo. Portanto, seja gentil.</p>
+<!-- /wp:paragraph --></div></div>
+<!-- /wp:media-text -->
+
+<!-- wp:image {"align":"center","id":74,"sizeSlug":"full","linkDestination":"none"} -->
+<div class="wp-block-image"><figure class="aligncenter size-full"><img src="https://www.alphazoollc.com/blog/wp-content/uploads/2022/01/bandit_smacked.jpg" alt="" class="wp-image-74"/></figure></div>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Hoje, o pai vai preparar o jogo e, então, pai e filha vão inserir Mia e alguns tijolos na tela juntos. Nessa jornada, ambos aprenderão um pouco sobre o sistema de coordenadas. Finalmente, o pai vai adicionar controles de teclado ao jogo e pai e filha poderão experimentar alterar a posição de Mia e dos tijolos.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Vamos começar!</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"align":"center","id":94,"sizeSlug":"full","linkDestination":"none"} -->
+<div class="wp-block-image"><figure class="aligncenter size-full"><img src="https://www.alphazoollc.com/blog/wp-content/uploads/2022/01/day_one_image-1.jpg" alt="" class="wp-image-94"/></figure></div>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>Configurando o jogo</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:media-text {"mediaId":97,"mediaLink":"https://www.alphazoollc.com/blog/?attachment_id=97","mediaType":"image","mediaWidth":15,"verticalAlignment":"top","style":{"color":{"background":"#ede193"}}} -->
+<div class="wp-block-media-text alignwide is-stacked-on-mobile is-vertically-aligned-top has-background" style="background-color:#ede193;grid-template-columns:15% auto"><figure class="wp-block-media-text__media"><img src="https://www.alphazoollc.com/blog/wp-content/uploads/2022/01/dad.png" alt="" class="wp-image-97 size-full"/></figure><div class="wp-block-media-text__content"><!-- wp:paragraph -->
+<p>O que nós vamos fazer é um jogo de navegador usando a linguagem de programação JavaScript. A ideia é que ele seja executado em um navegador.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Mas, por questão de segurança, você não pode simplesmente executar o jogo diretamente no seu computador abrindo o arquivo principal no seu navegador. O navegador espera acessar um site, não um arquivo local.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Então, para facilitar as coisas, eu preparei um programa auxiliar que <strong>vai</strong> executar seu jogo. Você pode abrir o programa auxiliar, arrastar o arquivo principal, <em>index.html</em>, para ele e o jogo vai começar a executar.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Aqui está o <a href="https://alphazoollc.com/Loader/AlphaZooLoader0.8.0.dmg">Programa para Mac</a> e aqui está o <a href="https://alphazoollc.com/Loader/AlphaZooLoaderSetup0.8.0.exe">Programa para Windows</a>.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Você também precisará de um editor de texto. O Bloco de Notas funciona bem. Muitos programadores gostam do <a href="https://www.sublimetext.com/" title="Sublime Text">Sublime Text</a>, que é bom e também gratuito. Não use o Microsoft Word porque a formatação especial quebra o código. Se você quiser usar o Editor de Texto do Mac, salve tudo como texto comum porque, novamente, em caso contrário a formatação especial vai quebrar o código.</p>
+<!-- /wp:paragraph --></div></div>
+<!-- /wp:media-text -->
+
+<!-- wp:image {"align":"center","id":82,"sizeSlug":"full","linkDestination":"none"} -->
+<div class="wp-block-image"><figure class="aligncenter size-full"><img src="https://www.alphazoollc.com/blog/wp-content/uploads/2022/01/loader_1.jpg" alt="" class="wp-image-82"/></figure></div>
+<!-- /wp:image -->
+
+<!-- wp:image {"align":"center","id":83,"sizeSlug":"full","linkDestination":"none"} -->
+<div class="wp-block-image"><figure class="aligncenter size-full"><img src="https://www.alphazoollc.com/blog/wp-content/uploads/2022/01/loader_2.jpg" alt="" class="wp-image-83"/></figure></div>
+<!-- /wp:image -->
+
+<!-- wp:image {"id":93,"sizeSlug":"full","linkDestination":"none"} -->
+<figure class="wp-block-image size-full"><img src="https://www.alphazoollc.com/blog/wp-content/uploads/2022/01/loader_3-1.jpg" alt="" class="wp-image-93"/></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:media-text {"mediaId":97,"mediaLink":"https://www.alphazoollc.com/blog/?attachment_id=97","mediaType":"image","mediaWidth":15,"verticalAlignment":"top","style":{"color":{"background":"#ede193"}}} -->
+<div class="wp-block-media-text alignwide is-stacked-on-mobile is-vertically-aligned-top has-background" style="background-color:#ede193;grid-template-columns:15% auto"><figure class="wp-block-media-text__media"><img src="https://www.alphazoollc.com/blog/wp-content/uploads/2022/01/dad.png" alt="" class="wp-image-97 size-full"/></figure><div class="wp-block-media-text__content"><!-- wp:paragraph -->
+<p><meta charset="utf-8"><a href="https://alphazoollc.com/GameJam/Day1.zip" title="Arquivos do Dia 1">Aqui estão os arquivos do Dia 1</a>. Há arquivos de arte para Mia e os tijolos, o código-fonte para vocês completarem, o código-fonte completo para referência e muito código de suporte que você pode simplesmente ignorar.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Baixe os arquivos e ponha-os onde você quiser. Execute o programa auxiliar (você pode precisar dar permissões a ele). Arraste o arquivo index.html no programa auxiliar e você verá... um céu azul.</p>
+<!-- /wp:paragraph --></div></div>
+<!-- /wp:media-text -->
+
+<!-- wp:image {"id":95,"sizeSlug":"full","linkDestination":"none"} -->
+<figure class="wp-block-image size-full"><img src="https://www.alphazoollc.com/blog/wp-content/uploads/2022/01/blue_sky.png" alt="" class="wp-image-95"/></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>Primeira Tarefa: Adicionar Mia!</h2>
+<!-- /wp:heading -->
+
+<!-- wp:media-text {"mediaId":97,"mediaLink":"https://www.alphazoollc.com/blog/?attachment_id=97","mediaType":"image","mediaWidth":15,"verticalAlignment":"top","style":{"color":{"background":"#ede193"}}} -->
+<div class="wp-block-media-text alignwide is-stacked-on-mobile is-vertically-aligned-top has-background" style="background-color:#ede193;grid-template-columns:15% auto"><figure class="wp-block-media-text__media"><img src="https://www.alphazoollc.com/blog/wp-content/uploads/2022/01/dad.png" alt="" class="wp-image-97 size-full"/></figure><div class="wp-block-media-text__content"><!-- wp:paragraph {"placeholder":"Content…"} -->
+<p>Abra o arquivo chamado game.js. É nele que vocês vão trabalhar.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Você deverá ver algo assim:</p>
+<!-- /wp:paragraph --></div></div>
+<!-- /wp:media-text -->
+
+<!-- wp:code -->
+<pre class="wp-block-code"><code>
+// Bem-vindos! É aqui que vocês escreverão seu jogo.
+// Qualquer coisa iniciando com duas // barras na frente é um comentário.
+// O computador ignora comentários. Eles servem para humanos
+// explicarem coisas a outros humanos.
+
+function initializeGame() {
+
+  let blue_sky = makeSprite("Art/blue_sky.png");
+  blue_sky.position.set(0, 0);
+  stage.addChild(blue_sky);
+}
+
+
+function updateGame(diff) {
+  
+}</code></pre>
+<!-- /wp:code -->
+
+<!-- wp:paragraph {"style":{"color":{"background":"#afe695"}}} -->
+<p class="has-background" style="background-color:#afe695"><strong>Detalhe</strong>: Eu escondi todo o código que cria o jogo. Se vocês estiverem curiosos, nosso jogo utiliza um framekwork chamado <a href="https://pixijs.download/">PixiJS</a> e todo o meu código extra está encapsulado no arquivo plumbing.js. Vamos ignorá-lo por agora.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:media-text {"mediaId":97,"mediaLink":"https://www.alphazoollc.com/blog/?attachment_id=97","mediaType":"image","mediaWidth":15,"verticalAlignment":"top","style":{"color":{"background":"#ede193"}}} -->
+<div class="wp-block-media-text alignwide is-stacked-on-mobile is-vertically-aligned-top has-background" style="background-color:#ede193;grid-template-columns:15% auto"><figure class="wp-block-media-text__media"><img src="https://www.alphazoollc.com/blog/wp-content/uploads/2022/01/dad.png" alt="" class="wp-image-97 size-full"/></figure><div class="wp-block-media-text__content"><!-- wp:paragraph -->
+<p>Há duas <strong>funções</strong> com as quais vamos trabalhar.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Uma <strong>função</strong> é basicamente um comando que você pode dar ao computador. Você pode por o quanto quiser dentro de uma função, muito ou pouco, e pode nomeá-la como preferir. É como uma forma de agrupar pensamentos. "Tudo isso aqui, vamos chamar de MinhaRotinaDeCaféDaManhã ou OrganizarQuarto."</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Para fazer uma função você deve escrever a palavra "function", seguida de um nome, seguida de alguns ( ) parênteses, onde você pode por alguma informação extra que desejar passar com o seu comando. Então, tudo entre os { } colchetes é o que a função realmente faz.<br><br><strong>initializeGame<em> </em></strong>é executada uma vez, assim que o jogo inicia.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Não há nada entre os ( ) parênteses porque ela não precisa de nenhuma informação extra.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Entre os colchetes há três comandos. Primeiramente, criamos um novo sprite utilizando makeSprite (outra função que está escondida no arquivo plumbing.js). Damos a ela um nome de arquivo, "Art/blue_sky.png", que é a imagem para o céu azul, e ela cria um sprite.<br><br>Nós, então, definimos a posição do céu azul para (0, 0). Explicarei isso em um minuto.<br></p>
+<!-- /wp:paragraph --></div></div>
+<!-- /wp:media-text -->
+
+<!-- wp:paragraph -->
+<p>Então, adicionamos o céu azul ao <strong>stage</strong>. O stage é onde você põe coisas na tela. Se você disser ao computador para por algo no stage, ele vai aparecer na tela. (A palavra stage vem de stage - palco, em inglês - de teatro)</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p><meta charset="utf-8">Um <strong>sprite</strong> é uma imagem que você pode movimentar. Por hora há apenas uma imagem do céu azul, mas nós vamos adicionar o sprite para Mia em seguida.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:media-text {"mediaId":98,"mediaLink":"https://www.alphazoollc.com/blog/?attachment_id=98","mediaType":"image","mediaWidth":15,"verticalAlignment":"top","style":{"color":{"background":"#7cd4f9"}}} -->
+<div class="wp-block-media-text alignwide is-stacked-on-mobile is-vertically-aligned-top has-background" style="background-color:#7cd4f9;grid-template-columns:15% auto"><figure class="wp-block-media-text__media"><img src="https://www.alphazoollc.com/blog/wp-content/uploads/2022/01/daughter.png" alt="" class="wp-image-98 size-full"/></figure><div class="wp-block-media-text__content"><!-- wp:paragraph {"placeholder":"Content…"} -->
+<p>Você pode movimentar sprites usando números. Por exemplo, você pode <strong>MOVER O CÉU</strong>.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p><meta charset="utf-8">Encontre a linha que contém "<em>blue_sky.position.set(0, 0);</em>" e mude os números. Tente (50, 50). Então, reinicie o jogo ou peça para seu pai reinicá-lo pressionando Command-R em um Mac ou Control-R no Windows. O céu deve ter se movido e você verá escuridão no canto superior esquerdo da janela.<br><br>Experimente mudar os números e veja o para onde o céu se move.</p>
+<!-- /wp:paragraph --></div></div>
+<!-- /wp:media-text -->
+
+<!-- wp:media-text {"mediaId":97,"mediaLink":"https://www.alphazoollc.com/blog/?attachment_id=97","mediaType":"image","mediaWidth":15,"verticalAlignment":"top","style":{"color":{"background":"#ede193"}}} -->
+<div class="wp-block-media-text alignwide is-stacked-on-mobile is-vertically-aligned-top has-background" style="background-color:#ede193;grid-template-columns:15% auto"><figure class="wp-block-media-text__media"><img src="https://www.alphazoollc.com/blog/wp-content/uploads/2022/01/dad.png" alt="" class="wp-image-97 size-full"/></figure><div class="wp-block-media-text__content"><!-- wp:paragraph -->
+<p>Agora, vamos adicionar Mia ao jogo.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Adicione as segunites linhas ao código do seu jogo:</p>
+<!-- /wp:paragraph --></div></div>
+<!-- /wp:media-text -->
+
+<!-- wp:code -->
+<pre class="wp-block-code"><code>
+// Bem-vindos! É aqui que vocês escreverão seu jogo.
+// Qualquer coisa iniciando com duas // barras na frente é um comentário.
+// O computador ignora comentários. Eles servem para humanos
+// explicarem coisas a outros humanos.
+
+<span class="has-inline-color has-vivid-red-color">let mia = null;</span>
+
+function initializeGame() {
+
+  let blue_sky = makeSprite("Art/blue_sky.png");
+  blue_sky.position.set(0, 0);
+  stage.addChild(blue_sky);
+
+  <span class="has-inline-color has-vivid-red-color">mia = makeAnimatedSprite("Art/mia_animations.json", "run");
+  mia.position.set(200, 200);
+  stage.addChild(mia);</span>
+}
+
+
+function updateGame(diff) {
+
+}
+
+</code></pre>
+<!-- /wp:code -->
+
+<!-- wp:image {"id":112,"sizeSlug":"full","linkDestination":"none"} -->
+<figure class="wp-block-image size-full"><img src="https://www.alphazoollc.com/blog/wp-content/uploads/2022/01/mia_on_screen.jpg" alt="" class="wp-image-112"/></figure>
+<!-- /wp:image -->
+
+<!-- wp:media-text {"mediaId":97,"mediaLink":"https://www.alphazoollc.com/blog/?attachment_id=97","mediaType":"image","mediaWidth":15,"verticalAlignment":"top","style":{"color":{"background":"#ede193"}}} -->
+<div class="wp-block-media-text alignwide is-stacked-on-mobile is-vertically-aligned-top has-background" style="background-color:#ede193;grid-template-columns:15% auto"><figure class="wp-block-media-text__media"><img src="https://www.alphazoollc.com/blog/wp-content/uploads/2022/01/dad.png" alt="" class="wp-image-97 size-full"/></figure><div class="wp-block-media-text__content"><!-- wp:paragraph -->
+<p>Parece o mesmo, exceto que estamos usando uma função diferente para fazer um sprite animado. Ela também precisa que nós escolhamos uma animação específica. Mia tem animações para correr ("run"), subir ("rise"), cair ("fall") e ficar parada ("idle"). Nós escolhmos correr. Você pode mudar isso e ver como as partes de subida e descida de um pulo são.</p>
+<!-- /wp:paragraph --></div></div>
+<!-- /wp:media-text -->
+
+<!-- wp:paragraph {"style":{"color":{"background":"#afe695"}}} -->
+<p class="has-background" style="background-color:#afe695">Também, próximo ao início do arquivo, escrevemos "let mia = null".<br><br>A palavra mia é uma <strong>variável</strong>. Variáveis armazenam informação, sejam números, texto ou sprites. Elas são chamadas variáveis porque você pode modificá-las. Por exemplo, você pode dizer "cat_weight = 10;" e em algum momento posterior no programa, "cat_weight = 15;" e mudar a variável; agora é 15 ao invés de 10.<br><br>Depois vamos aprender sobre "let" e "null" e por que pusemos essa linha <em>fora</em> da função.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>E lá está! Mia está na tela! Mas ela está parada, não se movendo.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Vamos adicionar mais duas linhas.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:code -->
+<pre class="wp-block-code"><code>
+// Bem-vindos! É aqui que vocês escreverão seu jogo.
+// Qualquer coisa iniciando com duas // barras na frente é um comentário.
+// O computador ignora comentários. Eles servem para humanos
+// explicarem coisas a outros humanos.
+
+let mia = null;
+
+function initializeGame() {
+
+  let blue_sky = makeSprite("Art/blue_sky.png");
+  blue_sky.position.set(0, 0);
+  stage.addChild(blue_sky);
+
+  mia = makeAnimatedSprite("Art/mia_animations.json", "run");
+  mia.position.set(200, 200);
+  stage.addChild(mia);
+  <span class="has-inline-color has-vivid-red-color">mia.animationSpeed = 0.3;
+  mia.play();</span>
+}
+
+
+function updateGame(diff) {
+
+}
+
+</code></pre>
+<!-- /wp:code -->
+
+<!-- wp:paragraph -->
+<p>Muito melhor. Agora Mia corre sem se mover.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:media-text {"mediaId":98,"mediaLink":"https://www.alphazoollc.com/blog/?attachment_id=98","mediaType":"image","mediaWidth":15,"verticalAlignment":"top","style":{"color":{"background":"#7cd4f9"}}} -->
+<div class="wp-block-media-text alignwide is-stacked-on-mobile is-vertically-aligned-top has-background" style="background-color:#7cd4f9;grid-template-columns:15% auto"><figure class="wp-block-media-text__media"><img src="https://www.alphazoollc.com/blog/wp-content/uploads/2022/01/daughter.png" alt="" class="wp-image-98 size-full"/></figure><div class="wp-block-media-text__content"><!-- wp:paragraph {"placeholder":"Content…"} -->
+<p>Movimente a Mia um pouco usando diferente valores para a posição na linha <em>mia.position.set(200, 200)</em>.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Tente mudar a velocidade da animação (<em>mia.animationSpeed</em>). Qual seria um número bem rápido? Qual seria um número lento? 0.1 é muito lento?</p>
+<!-- /wp:paragraph --></div></div>
+<!-- /wp:media-text -->
+
+<!-- wp:paragraph -->
+<p>Os números que mudam a posição de Mia são parte de um <strong>sistema de coordenadas</strong>. Você pode pensar em pixels numa tela como um pedaço de papel quadriculado:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":115,"sizeSlug":"full","linkDestination":"none"} -->
+<figure class="wp-block-image size-full"><img src="https://www.alphazoollc.com/blog/wp-content/uploads/2022/01/graph_paper.jpg" alt="" class="wp-image-115"/></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Para controlar a posição de um sprite, usamos <strong>coordenadas</strong>. A primeira, <strong>x</strong>, controla esquerda e direita. A segunda, <strong>y</strong>, controla cima e baixo.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Em Fuga Ousada de Mia, a tela tem 1024 pixels de largura e 576 pixels de altura.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":116,"sizeSlug":"full","linkDestination":"none"} -->
+<figure class="wp-block-image size-full"><img src="https://www.alphazoollc.com/blog/wp-content/uploads/2022/01/mia_on_screen-1.jpg" alt="" class="wp-image-116"/></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Neste sistema de coordenadas, começamos no canto superior esquerdo da tela. Isso significa 0 no eixo esquerda-direita e 0 no eixo cima-baixo.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Se você mover para a direita, o primeiro número aumenta. Então, se você mudar Mia de 200, 200 para 500, 200, ela se moverá para a direita.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Se você mover para baixo, o segundo número aumenta. Então, se você mover Mia de 200, 200 para 200, 400, ela se moverá para baixo na tela.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>Segunda Tarefa: Adicionar um tijolo ou dois!</h2>
+<!-- /wp:heading -->
+
+<!-- wp:media-text {"mediaId":97,"mediaLink":"https://www.alphazoollc.com/blog/?attachment_id=97","mediaType":"image","mediaWidth":15,"verticalAlignment":"top","style":{"color":{"background":"#ede193"}}} -->
+<div class="wp-block-media-text alignwide is-stacked-on-mobile is-vertically-aligned-top has-background" style="background-color:#ede193;grid-template-columns:15% auto"><figure class="wp-block-media-text__media"><img src="https://www.alphazoollc.com/blog/wp-content/uploads/2022/01/dad.png" alt="" class="wp-image-97 size-full"/></figure><div class="wp-block-media-text__content"><!-- wp:paragraph {"placeholder":"Content…"} -->
+<p>Que tal alguns tijolos? Adicione o seguinte código ao jogo.</p>
+<!-- /wp:paragraph --></div></div>
+<!-- /wp:media-text -->
+
+<!-- wp:code -->
+<pre class="wp-block-code"><code>
+// Bem-vindos! É aqui que vocês escreverão seu jogo.
+// Qualquer coisa iniciando com duas // barras na frente é um comentário.
+// O computador ignora comentários. Eles servem para humanos
+// explicarem coisas a outros humanos.
+
+let mia = null;
+<span class="has-inline-color has-vivid-red-color">let brick_1 = null;
+let brick_2 = null;</span>
+
+function initializeGame() {
+
+  let blue_sky = makeSprite("Art/blue_sky.png");
+  blue_sky.position.set(0, 0);
+  stage.addChild(blue_sky);
+
+  mia = makeAnimatedSprite("Art/mia_animations.json", "run");
+  mia.position.set(200, 200);
+  stage.addChild(mia);
+  mia.animationSpeed = 0.3;
+  mia.play();
+
+  <span class="has-inline-color has-vivid-red-color">brick_1 = makeSprite("Art/brick.png");
+  brick_1.position.set(500, 200);
+  brick_1.tint = color(1,0,0);
+  stage.addChild(brick_1);
+
+  brick_2 = makeSprite("Art/brick.png");
+  brick_2.position.set(200, 400);
+  brick_2.tint = color(0,0,1);
+  stage.addChild(brick_2);</span>
+}
+
+
+function updateGame(diff) {
+
+}
+
+</code></pre>
+<!-- /wp:code -->
+
+<!-- wp:image {"id":120,"sizeSlug":"full","linkDestination":"none"} -->
+<figure class="wp-block-image size-full"><img src="https://www.alphazoollc.com/blog/wp-content/uploads/2022/01/bricks_on_screen.jpg" alt="" class="wp-image-120"/></figure>
+<!-- /wp:image -->
+
+<!-- wp:media-text {"mediaId":97,"mediaLink":"https://www.alphazoollc.com/blog/?attachment_id=97","mediaType":"image","mediaWidth":15,"verticalAlignment":"top","style":{"color":{"background":"#ede193"}}} -->
+<div class="wp-block-media-text alignwide is-stacked-on-mobile is-vertically-aligned-top has-background" style="background-color:#ede193;grid-template-columns:15% auto"><figure class="wp-block-media-text__media"><img src="https://www.alphazoollc.com/blog/wp-content/uploads/2022/01/dad.png" alt="" class="wp-image-97 size-full"/></figure><div class="wp-block-media-text__content"><!-- wp:paragraph {"placeholder":"Content…"} -->
+<p>Basicamente a mesma coisa de antes. Nós criamos dois novos sprites e os pusemos na tela. Nós os nomeamos brick_1 e brick_2 (brick significa tijolo em inglês) para que nós (e o computador) possamos distingui-los.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Se você olhar para a figura que estamos usando, o tijolo é branco.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":121,"sizeSlug":"full","linkDestination":"none"} -->
+<figure class="wp-block-image size-full"><img src="https://www.alphazoollc.com/blog/wp-content/uploads/2022/01/brick.png" alt="" class="wp-image-121"/></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p>No código, nós <strong>tingimos</strong> (tint) os tijolos usando uma cor.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p><meta charset="utf-8"><span class="has-inline-color has-black-color">brick_1.tint = color(1,0,0);</span></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>color (cor, em inglês) é outra <strong>função</strong>. Ela espera três valores (vermelho, verde e azul) e retorna um número de cor que o computador consegue entender.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Os valores variam de 0 a 1. Então, para o primeiro valor, 0 é nada de vermelho, 1 é tudo de vermelho e assim sucessivamente.</p>
+<!-- /wp:paragraph --></div></div>
+<!-- /wp:media-text -->
+
+<!-- wp:media-text {"mediaId":98,"mediaLink":"https://www.alphazoollc.com/blog/?attachment_id=98","mediaType":"image","mediaWidth":15,"verticalAlignment":"top","style":{"color":{"background":"#7cd4f9"}}} -->
+<div class="wp-block-media-text alignwide is-stacked-on-mobile is-vertically-aligned-top has-background" style="background-color:#7cd4f9;grid-template-columns:15% auto"><figure class="wp-block-media-text__media"><img src="https://www.alphazoollc.com/blog/wp-content/uploads/2022/01/daughter.png" alt="" class="wp-image-98 size-full"/></figure><div class="wp-block-media-text__content"><!-- wp:paragraph {"placeholder":"Content…"} -->
+<p>Experimente um pouco mudar os valores da função color. Você consegue criar um tijolo verde?</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>E se nós tingirmos Mia? Tente escrever</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>mia.tint = color(0,1,0);</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Mia alienígena!</p>
+<!-- /wp:paragraph --></div></div>
+<!-- /wp:media-text -->
+
+<!-- wp:paragraph -->
+<p></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>Última Tarefa: Faça Mia se mover!</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>A última coisa que vamos fazer hoje é usar o teclado para mover Mia por aí.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:media-text {"mediaId":97,"mediaLink":"https://www.alphazoollc.com/blog/?attachment_id=97","mediaType":"image","mediaWidth":15,"verticalAlignment":"top","style":{"color":{"background":"#ede193"}}} -->
+<div class="wp-block-media-text alignwide is-stacked-on-mobile is-vertically-aligned-top has-background" style="background-color:#ede193;grid-template-columns:15% auto"><figure class="wp-block-media-text__media"><img src="https://www.alphazoollc.com/blog/wp-content/uploads/2022/01/dad.png" alt="" class="wp-image-97 size-full"/></figure><div class="wp-block-media-text__content"><!-- wp:paragraph -->
+<p>Você provavelmente está cansado, então eu não vou explicar a próxima parte em muito detalhe.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>&lt;---   vê? Você está cansado. Eu sei disso.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Adiciona o segunite à função updateGame (atualizar código, em inglês):</p>
+<!-- /wp:paragraph --></div></div>
+<!-- /wp:media-text -->
+
+<!-- wp:code -->
+<pre class="wp-block-code"><code>function updateGame(diff) {
+
+<span class="has-inline-color has-vivid-red-color">  // Se a seta direita do teclado for pressionada, mova Mia para a direita
+  if (key_down&#91;"ArrowRight"]) {
+    mia.x = mia.x + 5;
+  }
+
+  // Se a seta esquerda do teclado for pressionada, mova Mia para a esquerda
+  if (key_down&#91;"ArrowLeft"]) {
+    mia.x = mia.x - 5;
+  }
+
+  // Se a seta para baixo for pressionada, mova Mia para baixo
+  if (key_down&#91;"ArrowDown"]) {
+    mia.y = mia.y + 5;
+  }
+
+  // Se a seta para cima for pressionada, mova Mia para cima
+  if (key_down&#91;"ArrowUp"]) {
+    mia.y = mia.y - 5;
+  }</span>
+}</code></pre>
+<!-- /wp:code -->
+
+<!-- wp:media-text {"mediaId":97,"mediaLink":"https://www.alphazoollc.com/blog/?attachment_id=97","mediaType":"image","mediaWidth":15,"verticalAlignment":"top","style":{"color":{"background":"#ede193"}}} -->
+<div class="wp-block-media-text alignwide is-stacked-on-mobile is-vertically-aligned-top has-background" style="background-color:#ede193;grid-template-columns:15% auto"><figure class="wp-block-media-text__media"><img src="https://www.alphazoollc.com/blog/wp-content/uploads/2022/01/dad.png" alt="" class="wp-image-97 size-full"/></figure><div class="wp-block-media-text__content"><!-- wp:paragraph -->
+<p>Se jogo está desenhando e atualizando aproximadamente 60 vezes por segundo. Toda vez que ele desenha e atualiza, ele chama a função <strong>updateGame</strong>. Tudo o que você puser aqui vai acontecer aproximadamente 60 vezes por segundo.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Então estamos colocando teclas de ação no teclado nesse carinha. Há código no plumbing.js que escreve toda a informação de teclado em um <strong>dicionário</strong> chamado key_down. Basicamente, key_down é algo que consegue dizer se várias teclas foram pressionadas.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Não se preocupe muito sobre a estrutura desse código. O que ele faz é "se a seta direita do teclado tiver sido pressionada, mova a Mia no eito x em 5 pixels" etc</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>A propósito, a razão de pormos "let mia = null" fora da função <strong>initializeGame</strong> é para que nós possamos usar a variável "mia" em <strong>updateGame</strong> também. "blue_sky" só existe dentro da função <strong>updateGame</strong>. Mas "mia" está disponível para nós em todo lugar.</p>
+<!-- /wp:paragraph --></div></div>
+<!-- /wp:media-text -->
+
+<!-- wp:paragraph -->
+<p>E lá está! Mia está se movendo.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:media-text {"mediaId":98,"mediaLink":"https://www.alphazoollc.com/blog/?attachment_id=98","mediaType":"image","mediaWidth":15,"verticalAlignment":"top","style":{"color":{"background":"#7cd4f9"}}} -->
+<div class="wp-block-media-text alignwide is-stacked-on-mobile is-vertically-aligned-top has-background" style="background-color:#7cd4f9;grid-template-columns:15% auto"><figure class="wp-block-media-text__media"><img src="https://www.alphazoollc.com/blog/wp-content/uploads/2022/01/daughter.png" alt="" class="wp-image-98 size-full"/></figure><div class="wp-block-media-text__content"><!-- wp:paragraph {"placeholder":"Content…"} -->
+<p>O programa "monitora" seu teclado para ver se alguma tecla foi pressionada. O código que acabamos de escrever diz ao computador o que fazer se essas teclas forem pressionadas.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Usamos o sistema de coordenadas para mover Mia. <strong>x </strong>é esquerad e direita e <strong>y </strong>é cima e baixo.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Quando o jogador pressiona a seta direita do teclado, adicionamos 5 para <strong>x</strong> e então Mia se move 5 pixels para a direita.</p>
+<!-- /wp:paragraph --></div></div>
+<!-- /wp:media-text -->
+
+<!-- wp:media-text {"mediaId":98,"mediaLink":"https://www.alphazoollc.com/blog/?attachment_id=98","mediaType":"image","mediaWidth":15,"verticalAlignment":"top","style":{"color":{"background":"#7cd4f9"}}} -->
+<div class="wp-block-media-text alignwide is-stacked-on-mobile is-vertically-aligned-top has-background" style="background-color:#7cd4f9;grid-template-columns:15% auto"><figure class="wp-block-media-text__media"><img src="https://www.alphazoollc.com/blog/wp-content/uploads/2022/01/daughter.png" alt="" class="wp-image-98 size-full"/></figure><div class="wp-block-media-text__content"><!-- wp:paragraph {"placeholder":"Content…"} -->
+<p>Tente mudar o número de pixels! Se você mover Mia em 10 pixels, como vai ficar?</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>E se você usar números diferentes para cada tecla?</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Você pode desligar o movimento cima/baixo deletando alguma parte do código?</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p><strong>Grande desafio:</strong> você consegue mudar o código para mover um dos tijolos ao invés de Mia?</p>
+<!-- /wp:paragraph --></div></div>
+<!-- /wp:media-text -->
+
+<!-- wp:paragraph -->
+<p>Ufa. É muita coisa para o primeiro dia. Nós nos vemos novamente amanhã, quando vamos dar a Mia um chão de tijolos onde ela poderá correr e pular!</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph {"style":{"color":{"background":"#afe695"}}} -->
+<p class="has-background" style="background-color:#afe695"><strong>Detalhe: </strong>O sprite de Mia é um layout que fiz a partir <a href="https://aamatniekss.itch.io/fantasy-knight-free-pixelart-animated-character" title="deste Cavaleiro de Fantasia">deste Cavaleiro de Fantasia</a> de itch.io. Veja lá!</p>
+<!-- /wp:paragraph -->

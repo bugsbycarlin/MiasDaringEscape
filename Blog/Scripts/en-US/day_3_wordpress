@@ -1,0 +1,1158 @@
+Quarantine Game Jam Day 3
+https://www.alphazoollc.com/blog/quarantine-game-jam-day-3/
+
+
+
+<!-- wp:paragraph -->
+<p>(Activity time: about 90 minutes)</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>(<a href="https://alphazoollc.com/GameJam/Day3.zip" title="Download the Day Three Files Here">Download the Day Three Files Here</a>)</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Previous posts:<br><a href="https://www.alphazoollc.com/blog/quarantine-game-jam-day-1/">Game Jam Day 1</a><br><a href="https://www.alphazoollc.com/blog/quarantine-game-jam-day-2/" title="Game Jam Day 2">Game Jam Day 2</a></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2 id="intro">Intro</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Hello, and welcome to day 3 of the Dad and Daughter Quarantine Game Jam Tutorial!</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:gallery {"linkTo":"none"} -->
+<figure class="wp-block-gallery has-nested-images columns-default is-cropped"><!-- wp:image {"id":171,"sizeSlug":"large","linkDestination":"none"} -->
+<figure class="wp-block-image size-large"><img src="https://www.alphazoollc.com/blog/wp-content/uploads/2022/01/gravity_falls_3.gif" alt="" class="wp-image-171"/></figure>
+<!-- /wp:image -->
+
+<!-- wp:image {"id":172,"sizeSlug":"large","linkDestination":"none"} -->
+<figure class="wp-block-image size-large"><img src="https://www.alphazoollc.com/blog/wp-content/uploads/2022/01/mia_bopped.gif" alt="" class="wp-image-172"/></figure>
+<!-- /wp:image --></figure>
+<!-- /wp:gallery -->
+
+<!-- wp:paragraph -->
+<p><br>We're making a game called <strong>Mia's Daring Escape.</strong> On day 1, we set up the game and put Mia on the screen. On day  2, we gave Mia a brick level to run, and a jumping skill.<br></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:media-text {"mediaPosition":"right","mediaId":174,"mediaLink":"https://www.alphazoollc.com/blog/?attachment_id=174","mediaType":"image"} -->
+<div class="wp-block-media-text alignwide has-media-on-the-right is-stacked-on-mobile"><figure class="wp-block-media-text__media"><img src="https://www.alphazoollc.com/blog/wp-content/uploads/2022/01/kimpine.jpeg" alt="" class="wp-image-174 size-full"/></figure><div class="wp-block-media-text__content"><!-- wp:paragraph {"placeholder":"Content…"} -->
+<p><meta charset="utf-8">Today we’re add falling bricks and death and stuff.</p>
+<!-- /wp:paragraph --></div></div>
+<!-- /wp:media-text -->
+
+<!-- wp:paragraph -->
+<p></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2 id="first-task-falling-bricks">First Task: Falling bricks!</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p><meta charset="utf-8">We begin where we left off yesterday. You can use the files you already have, or <a href="https://alphazoollc.com/GameJam/Day3.zip" title="download the day three files">download the day three files</a> and start from there. The day three files have today's code changes to help you if you get lost.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>We're going to make a new <strong>function</strong> called <strong>dropBricks</strong> which drops a brick every 0.25 seconds.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Let's start by making an empty function. Add this to your code:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:code -->
+<pre class="wp-block-code"><code>// Keep Mia roughly in the center of the screen by using a tracker
+// which stays within 100 pixels of Mia, and then moving the whole stage
+// so that the tracker stays in the center of the screen.
+function followMia() {
+
+  if (mia.x - tracker &gt; 100) {
+    tracker = mia.x - 100;
+  }
+
+  if (tracker - mia.x &gt; 100) {
+    tracker = mia.x + 100;
+  }
+
+  stage.x = (game_width / 2 - tracker);
+}
+
+
+<span class="has-inline-color has-vivid-red-color">// Every 250 milliseconds, drop a brick.
+function dropBricks() {
+
+}</span>
+
+
+function updateGame(diff) {
+
+  // Don't try to update the game until we've created Mia,
+  // or the game will crash.
+  if (mia == null) return;
+
+  <span class="has-inline-color has-vivid-red-color">dropBricks();</span>
+
+  // If the right key got pushed, move Mia to the right
+  if (key_down&#91;"ArrowRight"]) {
+    mia.x = mia.x + 7;
+    mia.scale.set(1,1);
+  }
+
+  // If the left key got pushed, move Mia to the left
+  if (key_down&#91;"ArrowLeft"]) {
+    mia.x = mia.x - 7;
+    mia.scale.set(-1,1);
+  }
+...
+...
+...</code></pre>
+<!-- /wp:code -->
+
+<!-- wp:paragraph -->
+<p>We have an empty function, and it gets called from <strong>updateGame</strong> (so, about 60 times a second).</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>It's time to learn about time.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Whatever happens in <strong>dropBricks</strong>, we want don't want it to happen on every frame. We only want it to happen every 250 milliseconds.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>In javascript, you can call a function called <strong>Date.now()</strong> to get the current time. What you get back is a weird large number, but it doesn't matter, because if you call it two seconds later, you get a number which is 2000 milliseconds larger:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:code -->
+<pre class="wp-block-code"><code>first_time = Date.now()
+...
+...
+// do stuff for 2 seconds
+...
+...
+second_time = Date.now
+difference = second_time - first_time
+// difference will be 2000</code></pre>
+<!-- /wp:code -->
+
+<!-- wp:paragraph {"style":{"color":{"background":"#afe695"}}} -->
+<p class="has-background" style="background-color:#afe695"><strong>Detail: </strong>The number you get from Date.now() is the number of milliseconds elapsed since January 1, 1970. This is  sort of a standard across all computers for reckoning the current time. I can send this number to a server on the other side of the world, and we'll both agree on what it means.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Let's add a variable to track the last time we dropped a brick, and let's put it at the top of the code:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:code -->
+<pre class="wp-block-code"><code>let mia = null;
+let bricks = &#91;];
+let colors = &#91;
+  color(1,0,0), // Red
+  color(0,1,0), // Green
+  color(0,0,1), // Blue
+]
+
+let tracker = 0;
+
+<span class="has-inline-color has-vivid-red-color">let last_brick = Date.now();</span>
+
+
+function initializeGame() {
+
+  for (num = -1; num &lt; 8; num += 1) {
+    let blue_sky = makeSprite("Art/blue_sky.png");
+    blue_sky.position.set(game_width * num, 0);
+    stage.addChild(blue_sky);
+  }
+...
+...
+...</code></pre>
+<!-- /wp:code -->
+
+<!-- wp:paragraph -->
+<p>Then, let's add this code inside the <strong>dropBricks </strong>function:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:code -->
+<pre class="wp-block-code"><code>// Every 250 milliseconds, drop a brick.
+function dropBricks() {
+  <span class="has-inline-color has-vivid-red-color">if (Date.now() - last_brick &gt; 250) {
+
+    console.log(last_brick + " cookies")    
+    last_brick = Date.now();
+    
+  }</span>
+}</code></pre>
+<!-- /wp:code -->
+
+<!-- wp:paragraph -->
+<p>We take the time <strong>right now</strong> and subtract the last brick drop time. If the answer is more than 250, then enough time has passed. For now, we just print "359072350987345 cookies" or whatever the time value is.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Then, we set the last brick drop time to <strong>right now</strong>, so that in 250 more milliseconds, this stuff will happen again.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:media-text {"mediaId":97,"mediaLink":"https://www.alphazoollc.com/blog/?attachment_id=97","mediaType":"image","mediaWidth":15,"verticalAlignment":"top","style":{"color":{"background":"#ede193"}}} -->
+<div class="wp-block-media-text alignwide is-stacked-on-mobile is-vertically-aligned-top has-background" style="background-color:#ede193;grid-template-columns:15% auto"><figure class="wp-block-media-text__media"><img src="https://www.alphazoollc.com/blog/wp-content/uploads/2022/01/dad.png" alt="" class="wp-image-97 size-full"/></figure><div class="wp-block-media-text__content"><!-- wp:paragraph {"placeholder":"Content…"} -->
+<p>When you run this code, press <meta charset="utf-8">Command-Option-J on a Mac or Ctrl-Shift-J on Windows to bring up the <strong>debug console</strong>. (Edit: it's Command-Option-I on a Mac. I use a Mac. I don't know why I got this wrong)</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>We're using <strong>console.log</strong>, a function that prints things to the <strong>debug console</strong>.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>We want to see if that code prints something a few times a second.</p>
+<!-- /wp:paragraph --></div></div>
+<!-- /wp:media-text -->
+
+<!-- wp:media-text {"mediaId":98,"mediaLink":"https://www.alphazoollc.com/blog/?attachment_id=98","mediaType":"image","mediaWidth":15,"verticalAlignment":"top","style":{"color":{"background":"#7cd4f9"}}} -->
+<div class="wp-block-media-text alignwide is-stacked-on-mobile is-vertically-aligned-top has-background" style="background-color:#7cd4f9;grid-template-columns:15% auto"><figure class="wp-block-media-text__media"><img src="https://www.alphazoollc.com/blog/wp-content/uploads/2022/01/daughter.png" alt="" class="wp-image-98 size-full"/></figure><div class="wp-block-media-text__content"><!-- wp:paragraph {"placeholder":"Content…"} -->
+<p>Sorry if you already know this, but <strong>milliseconds</strong> are tiny bits of time. 1000 milliseconds is one second, so 250 milliseconds is a quarter of a second.</p>
+<!-- /wp:paragraph --></div></div>
+<!-- /wp:media-text -->
+
+<!-- wp:paragraph -->
+<p>With the <strong>debug console</strong> open, you should see something like this:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":182,"sizeSlug":"full","linkDestination":"none"} -->
+<figure class="wp-block-image size-full"><img src="https://www.alphazoollc.com/blog/wp-content/uploads/2022/01/printing_cookie_times.jpg" alt="" class="wp-image-182"/></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Every quarter of a second, the program prints out the next number of cookies. If you subtracted two numbers in a row, the answer should be <em>about</em> 250. It's not exact, because the computer can't guarantee it will take the same exact amount of time between frames. But it's close enough for our purposes.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph {"style":{"color":{"background":"#afe695"}}} -->
+<p class="has-background" style="background-color:#afe695"><strong>Detail</strong>: Yes, computers in general can guarantee exact times at much smaller fractions of a second, but it takes extra work, and it's typically not worth the trouble for making games.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>If that 250 millisecond delay is working, let's add the actual brick drop code:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:code -->
+<pre class="wp-block-code"><code><meta charset="utf-8">// Every 250 milliseconds, drop a brick.
+function dropBricks() {
+  <span class="has-inline-color has-black-color"><s>if (Date.now() - last_brick &gt; 250) {
+
+    console.log(last_brick + " cookies")    
+    last_brick = Date.now();
+    
+  }</s></span>
+
+  <span class="has-inline-color has-vivid-red-color">if (Date.now() - last_brick &gt; 250) {
+
+    // Make a new brick
+    let brick = makeSprite("Art/brick.png");
+    brick.anchor.set(0.5,1);
+    brick.tint = pick(colors);
+
+    // Set it in the right place and give it some drop speed.
+    brick.column = dice(70);
+    brick.position.set(120 * brick.column, -50);
+    brick.y_velocity = 1;
+    </span>
+    <span class="has-inline-color has-vivid-red-color">// Add it to the stage, and add it to the list of bricks.
+    stage.addChild(brick);
+    bricks.push(brick);
+
+    last_brick = Date.now();
+  }
+
+  // For every brick, if it has y_velocity, drop it.
+  for (i = 0; i &lt; bricks.length; i += 1) {
+    let brick = bricks&#91;i];
+
+    if (brick.y_velocity &gt; 0) {
+      brick.y = brick.y + brick.y_velocity;
+      brick.y_velocity = brick.y_velocity + 0.25;
+    }
+  }</span>
+}</code></pre>
+<!-- /wp:code -->
+
+<!-- wp:image {"id":184,"sizeSlug":"full","linkDestination":"none"} -->
+<figure class="wp-block-image size-full"><img src="https://www.alphazoollc.com/blog/wp-content/uploads/2022/01/mia_bricks_falling.gif" alt="" class="wp-image-184"/></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:media-text {"mediaId":98,"mediaLink":"https://www.alphazoollc.com/blog/?attachment_id=98","mediaType":"image","mediaWidth":15,"verticalAlignment":"top","style":{"color":{"background":"#7cd4f9"}}} -->
+<div class="wp-block-media-text alignwide is-stacked-on-mobile is-vertically-aligned-top has-background" style="background-color:#7cd4f9;grid-template-columns:15% auto"><figure class="wp-block-media-text__media"><img src="https://www.alphazoollc.com/blog/wp-content/uploads/2022/01/daughter.png" alt="" class="wp-image-98 size-full"/></figure><div class="wp-block-media-text__content"><!-- wp:paragraph {"placeholder":"Content…"} -->
+<p>Is this a good amount of brick droppage? Try setting the time delay to 25 milliseconds instead!</p>
+<!-- /wp:paragraph --></div></div>
+<!-- /wp:media-text -->
+
+<!-- wp:image {"id":187,"sizeSlug":"full","linkDestination":"none"} -->
+<figure class="wp-block-image size-full"><img src="https://www.alphazoollc.com/blog/wp-content/uploads/2022/01/mia_too_many_bricks.gif" alt="" class="wp-image-187"/></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:media-text {"mediaId":98,"mediaLink":"https://www.alphazoollc.com/blog/?attachment_id=98","mediaType":"image","mediaWidth":15,"verticalAlignment":"top","style":{"color":{"background":"#7cd4f9"}}} -->
+<div class="wp-block-media-text alignwide is-stacked-on-mobile is-vertically-aligned-top has-background" style="background-color:#7cd4f9;grid-template-columns:15% auto"><figure class="wp-block-media-text__media"><img src="https://www.alphazoollc.com/blog/wp-content/uploads/2022/01/daughter.png" alt="" class="wp-image-98 size-full"/></figure><div class="wp-block-media-text__content"><!-- wp:paragraph {"placeholder":"Content…"} -->
+<p>Too much! Too much! Go back!</p>
+<!-- /wp:paragraph --></div></div>
+<!-- /wp:media-text -->
+
+<!-- wp:paragraph -->
+<p></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph {"placeholder":"Content…"} -->
+<p>Okay. So. Here are some things to note about the code:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>We start the new bricks with a <strong>y position</strong> of -50. That's above the top of the screen. We do this so that the bricks won't be visible when they pop into existence.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>We've given every brick a "column" value, because once the bricks start stacking up, we're going to need to keep track of which column we're working with:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":186,"sizeSlug":"full","linkDestination":"none"} -->
+<figure class="wp-block-image size-full"><img src="https://www.alphazoollc.com/blog/wp-content/uploads/2022/01/column_diagram.jpg" alt="" class="wp-image-186"/></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p>To make things convenient for ourselves, we're only going to line up all the brick drops so that each new brick goes into a specific column. No overlaps.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph {"style":{"color":{"background":"#afe695"}}} -->
+<p class="has-background" style="background-color:#afe695"><strong>Detail: </strong>Yes, I know you would never build like this with your *cough* plastic bricks *cough*. Very unstable. But very easy to program.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>In plumbing.js, I've added a function called <strong>dice</strong> which rolls a dice of whatever size you give it. Give it dice(10), it will roll for a random number between 1 and 10. Give it dice(70), it will roll for a random number between 1 and 70.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Since our old brick making loop went from -8 to 70, there are negative columns. We're going to ignore these, and roll the dice on the 70 positive columns.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Each new brick gets assigned to a column. We set the brick's x position to 120 * column.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:media-text {"mediaId":97,"mediaLink":"https://www.alphazoollc.com/blog/?attachment_id=97","mediaType":"image","mediaWidth":15,"verticalAlignment":"top","style":{"color":{"background":"#ede193"}}} -->
+<div class="wp-block-media-text alignwide is-stacked-on-mobile is-vertically-aligned-top has-background" style="background-color:#ede193;grid-template-columns:15% auto"><figure class="wp-block-media-text__media"><img src="https://www.alphazoollc.com/blog/wp-content/uploads/2022/01/dad.png" alt="" class="wp-image-97 size-full"/></figure><div class="wp-block-media-text__content"><!-- wp:paragraph -->
+<p>In the second part of the code, we do a loop, but instead of looping on a number, we <strong>loop the list</strong>.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:code -->
+<pre class="wp-block-code"><code><mark style="background-color:rgba(0, 0, 0, 0)" class="has-inline-color has-black-color">for (i = 0; i &lt; bricks.length; i += 1)</mark> {
+  let brick = bricks&#91;i];
+
+  ...
+  ...
+  ...
+}</code></pre>
+<!-- /wp:code -->
+
+<!-- wp:paragraph -->
+<p>This loop command says "go through all the bricks in the list, and do the code in { } curly braces once for each thing."</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>The first thing we do inside that loop is "let brick = bricks[i]".</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>That just means "make a temporary variable for the current item in the list".</p>
+<!-- /wp:paragraph --></div></div>
+<!-- /wp:media-text -->
+
+<!-- wp:paragraph -->
+<p>We loop over every brick in the list, and if the brick has y velocity, we drop it.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Now we want to add brick stacking. To stack the bricks, we just need to keep track of columns, and convert a falling brick to a stacked brick at the right time.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Let's add a variable that tracks each of the stacks:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:code -->
+<pre class="wp-block-code"><code>
+let mia = null;
+let bricks = &#91;];
+<span class="has-inline-color has-vivid-red-color">let stacks = {};</span>
+let colors = &#91;
+  color(1,0,0), // Red
+  color(0,1,0), // Green
+  color(0,0,1), // Blue
+]
+
+let tracker = 0;
+
+let last_brick = Date.now();
+...
+...
+...</code></pre>
+<!-- /wp:code -->
+
+<!-- wp:media-text {"mediaId":97,"mediaLink":"https://www.alphazoollc.com/blog/?attachment_id=97","mediaType":"image","mediaWidth":15,"verticalAlignment":"top","style":{"color":{"background":"#ede193"}}} -->
+<div class="wp-block-media-text alignwide is-stacked-on-mobile is-vertically-aligned-top has-background" style="background-color:#ede193;grid-template-columns:15% auto"><figure class="wp-block-media-text__media"><img src="https://www.alphazoollc.com/blog/wp-content/uploads/2022/01/dad.png" alt="" class="wp-image-97 size-full"/></figure><div class="wp-block-media-text__content"><!-- wp:paragraph -->
+<p>Note the curly braces.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Bricks is a list (bananas, oranges, apples).</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Stacks is a <strong>dictionary</strong> (bananas: 3, oranges: 17, apples: 5).</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Looking back at the column diagram,</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":186,"sizeSlug":"full","linkDestination":"none"} -->
+<figure class="wp-block-image size-full"><img src="https://www.alphazoollc.com/blog/wp-content/uploads/2022/01/column_diagram.jpg" alt="" class="wp-image-186"/></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p>The dictionary for these columns would look like this:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:code -->
+<pre class="wp-block-code"><code>{
+  1: 3,
+  2: 2,
+  3: 6,
+  4: 1
+}</code></pre>
+<!-- /wp:code --></div></div>
+<!-- /wp:media-text -->
+
+<!-- wp:paragraph -->
+<p>Now let's make sure that our original floor of bricks correspond to columns, and that they have y velocity of 0:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:code -->
+<pre class="wp-block-code"><code>function initializeGame() {
+
+  for (num = -1; num &lt; 8; num += 1) {
+    let blue_sky = makeSprite("Art/blue_sky.png");
+    blue_sky.position.set(game_width * num, 0);
+    stage.addChild(blue_sky);
+  }
+
+  for (num = -8; num &lt; 70; num += 1) {
+    let brick = makeSprite("Art/brick.png");
+    brick.anchor.set(0.5,1);
+    brick.position.set(120 * num, game_height);
+    brick.tint = pick(colors);
+    stage.addChild(brick);
+    bricks.push(brick);
+
+ <span class="has-inline-color has-vivid-red-color">   brick.column = num;
+    brick.y_velocity = 0;
+    stacks&#91;brick.column] = 1;</span>
+  }
+
+  mia = makeAnimatedSprite("Art/mia_animations.json", "run");
+  mia.anchor.set(0.5, 0.9);
+  mia.position.set(200, game_height - 40);
+  stage.addChild(mia);
+  mia.animationSpeed = 0.3;
+  mia.play();
+  mia.state = "running";
+  mia.y_velocity = 0;
+}</code></pre>
+<!-- /wp:code -->
+
+<!-- wp:paragraph -->
+<p>We give each brick a column number, then set the y velocity to 0 (meaning these bricks aren't falling), then we set the stack height for that column to 1.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>That means, at the start of the game, all the stacks are at a height of 1 brick.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>To finish brick stacking, we just need to go back to where the bricks are falling, check when they've landed, stop them, and change the stack height:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":192,"sizeSlug":"full","linkDestination":"none"} -->
+<figure class="wp-block-image size-full"><img src="https://www.alphazoollc.com/blog/wp-content/uploads/2022/01/column_diagram_2-1.jpg" alt="" class="wp-image-192"/></figure>
+<!-- /wp:image -->
+
+<!-- wp:image {"id":193,"sizeSlug":"full","linkDestination":"none"} -->
+<figure class="wp-block-image size-full"><img src="https://www.alphazoollc.com/blog/wp-content/uploads/2022/01/column_diagram_3.jpg" alt="" class="wp-image-193"/></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p>Add this code to <strong>dropBricks</strong>:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:code -->
+<pre class="wp-block-code"><code>// Every 250 milliseconds, drop a brick.
+function dropBricks() {
+
+  if (Date.now() - last_brick &gt; 250) {
+
+    // Make a new brick
+    let brick = makeSprite("Art/brick.png");
+    brick.anchor.set(0.5,1);
+    brick.tint = pick(colors);
+
+    // Set it in the right place and give it some drop speed.
+    brick.column = dice(70);
+    brick.position.set(120 * brick.column, -50);
+    brick.y_velocity = 1;
+    
+    // Add it to the stage, and add it to the list of bricks.
+    stage.addChild(brick);
+    bricks.push(brick);
+
+    last_brick = Date.now();
+  }
+
+  // For every brick, if it has y_velocity, drop it.
+  for (i = 0; i &lt; bricks.length; i += 1) {
+    let brick = bricks&#91;i];
+
+    if (brick.y_velocity &gt; 0) {
+      brick.y = brick.y + brick.y_velocity;
+      brick.y_velocity = brick.y_velocity + 0.25;
+
+      <span class="has-inline-color has-vivid-red-color">// If it goes past the brick stack, stop it,
+      // and increase the stack value.
+      if (brick.y &gt;= game_height - 36 * stacks&#91;brick.column]) {
+        brick.y = game_height - 36 * stacks&#91;brick.column];
+        brick.y_velocity = 0;
+        stacks&#91;brick.column] = stacks&#91;brick.column] + 1;
+      }</span>
+    }
+  }
+}</code></pre>
+<!-- /wp:code -->
+
+<!-- wp:paragraph -->
+<p>Each brick is 36 pixels tall, so to check when a falling brick has hit the ground, we see if the y value is greater than (game_height - 36 * stack height).</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>We stop the fall by setting y velocity to 0, and add 1 to the stack height.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Wheeee!</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":194,"sizeSlug":"full","linkDestination":"none"} -->
+<figure class="wp-block-image size-full"><img src="https://www.alphazoollc.com/blog/wp-content/uploads/2022/01/mia_bricks_stacking.gif" alt="" class="wp-image-194"/></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2 id="second-task-help-mia-stand-on-bricks">Second Task: Help Mia stand on bricks!</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Next, we're going to make Mia stand on the bricks.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Remember when we added jumping, we gave Mia two states that she could be in: running or jumping. We're going to add third and fourth states: falling, and kaput. Falling is when Mia is moving downwards, and kaput is when she gets bopped by a brick.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>We're adding a new function called <strong>testBricks</strong>. This function will check all of Mia's interactions with the bricks.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>For starters, let's just make an empty function, and the new falling state:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:code -->
+<pre class="wp-block-code"><code>// Every 250 milliseconds, drop a brick.
+function dropBricks() {
+  ...
+  ...
+  ...
+}
+
+
+<span class="has-inline-color has-vivid-red-color">function testBricks() {
+
+}</span>
+
+
+function updateGame(diff) {
+
+  ...
+  ...
+
+  // If the space bar got pushed, make Mia jump
+  if (key_down&#91;" "] &amp;&amp; mia.state == "running") {
+    mia.state = "jumping";
+    mia.y_velocity = -20;
+  }
+
+  // If Mia is jumping, move her upwards, use gravity to pull her downwards,
+  // and if she reaches the ground, stop the jump.
+  <s>if (mia.state == "jumping") {</s>
+  <span class="has-inline-color has-vivid-red-color">if (mia.state == "jumping" || mia.state == "falling") {</span>
+    mia.y = mia.y + mia.y_velocity;
+    mia.y_velocity = mia.y_velocity + 0.8;
+    if (mia.y &gt; game_height - 40) {
+      mia.y = game_height - 40;
+      mia.y_velocity = 0;
+      mia.state = "running";
+    }
+
+    <span class="has-inline-color has-vivid-red-color">if (mia.y_velocity &gt; 0 &amp;&amp; mia.state == "jumping") {
+      // switch to falling
+      mia.state = "falling";
+    }</span>
+  }
+
+  <span class="has-inline-color has-vivid-red-color">testBricks();</span>
+
+  followMia();
+}</code></pre>
+<!-- /wp:code -->
+
+<!-- wp:paragraph -->
+<p>The game should look the same as before. But inside the code, Mia now switches from jumping to falling when her y velocity goes from negative to positive, and on every frame, we call the <strong>testBricks</strong> function.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Before we get Mia to stand on the brick stacks, we're also going to have to remove our old landing code.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Delete this stuff:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:code -->
+<pre class="wp-block-code"><code><meta charset="utf-8">function updateGame(diff) {
+
+  ...
+  ...
+
+  // If the space bar got pushed, make Mia jump
+  if (key_down&#91;" "] &amp;&amp; mia.state == "running") {
+    mia.state = "jumping";
+    mia.y_velocity = -20;
+  }
+
+  // If Mia is jumping, move her upwards, use gravity to pull her downwards,
+  // and if she reaches the ground, stop the jump.
+  <span class="has-inline-color has-black-color">if (mia.state == "jumping" || mia.state == "falling") {</span>
+    mia.y = mia.y + mia.y_velocity;
+    mia.y_velocity = mia.y_velocity + 0.8;
+    <s>if (mia.y &gt; game_height - 40) {
+      mia.y = game_height - 40;
+      mia.y_velocity = 0;
+      mia.state = "running";
+    }</s>
+
+    <span class="has-inline-color has-black-color">if (mia.y_velocity &gt; 0 &amp;&amp; mia.state == "jumping") {
+      // switch to falling
+      mia.state = "falling";
+    }</span>
+  }
+
+  <span class="has-inline-color has-black-color">testBricks();</span>
+
+  followMia();
+}</code></pre>
+<!-- /wp:code -->
+
+<!-- wp:paragraph -->
+<p>Now Mia falls right through the floor, and to fix that, we will write the code for <strong>testBricks</strong>.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Here's how <strong>testBricks</strong> works:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>First, we do some math to figure out which column Mia is supposed to be standing on. As Mia runs from left to right, she will cross each column: 0, 1, 2, 3, et cetera.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Second, we do some math to figure out the <strong>floor height</strong> for that column. Each brick is 36 pixels high. If the column has two bricks, the stack is 2 * 36 pixels high. But we're starting from the bottom of the screen and going upwards, so it's game_height - 2 * 36. And we're also going up by 4 more pixels, because it makes Mia's footing look slightly better. So the floor height is game_height - brick_number * 36 - 4.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Third, we check if Mia's y position is way above the floor height. In this case, she's doing a Wile E Coyote and running over thin air, so we'll switch her to falling.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":195,"sizeSlug":"full","linkDestination":"none"} -->
+<figure class="wp-block-image size-full"><img src="https://www.alphazoollc.com/blog/wp-content/uploads/2022/01/coyote.gif" alt="" class="wp-image-195"/></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Fourth, if Mia is falling and her y position is at or <em>below<strong> </strong></em>the floor height, Mia has just landed, and we'll set her to exactly the floor height, then switch her to running.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Add this code to <strong>testBricks</strong>:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:code -->
+<pre class="wp-block-code"><code>function testBricks() {
+
+<span class="has-inline-color has-vivid-red-color">  mia.column = Math.floor((mia.x + 60) / 120);
+
+  // Don't test bricks if Mia is too far to the left or right.
+  if (mia.column &lt; -8 || mia.column &gt;= 70) return;
+
+  // Figure out the floor for Mia's current column.
+  let floor_height = game_height - 36 * stacks&#91;mia.column] - 4;
+
+  // First, check if Mia has run into thin air,
+  // like Wile E Coyote, and make her fall.
+  if (mia.y &lt; floor_height) {
+    mia.state = "falling"
+  }
+
+  // Check if Mia has fallen on top of the current stack.
+  if (mia.state == "falling" &amp;&amp; mia.y &gt;= floor_height &amp;&amp; mia.y_velocity &gt; 0) {
+    mia.y = floor_height;
+    mia.y_velocity = 0;
+    mia.state = "running";
+  }</span>
+}</code></pre>
+<!-- /wp:code -->
+
+<!-- wp:media-text {"mediaId":97,"mediaLink":"https://www.alphazoollc.com/blog/?attachment_id=97","mediaType":"image","mediaWidth":15,"verticalAlignment":"top","style":{"color":{"background":"#ede193"}}} -->
+<div class="wp-block-media-text alignwide is-stacked-on-mobile is-vertically-aligned-top has-background" style="background-color:#ede193;grid-template-columns:15% auto"><figure class="wp-block-media-text__media"><img src="https://www.alphazoollc.com/blog/wp-content/uploads/2022/01/dad.png" alt="" class="wp-image-97 size-full"/></figure><div class="wp-block-media-text__content"><!-- wp:paragraph {"placeholder":"Content…"} -->
+<p><meta charset="utf-8">There's a lot of math here.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph {"placeholder":"Content…"} -->
+<p>Don't worry too much about understanding the code in specific detail. I want you to get the experience of making a game, and learn <em>some</em> programming, not to perfectly understand each piece of what you're doing and get bogged down.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>If the example doesn't work and you're getting stuck on bugs, remember that I've included example files. The code in game_step_4.js should work. You can copy the testBricks function, or just replace all of game.js with the code in game_step_4.js.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>I think the best way to learn the math in game programming is to play with the numbers together and see what changes.<br><br>If you pretend the brick height is 46 instead of 36, Mia will stand too high above the bricks, and the higher the stack gets, the worse it will look.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>If you get rid of the little -4 adjustment to account for Mia's foot placement, it'll mostly look okay, but... slightly off.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>The "+ 60" from the column calculation is to offset from the bricks, which are all 120 pixels wide, but positioned at their centers. If you take this out, Mia will only stand correctly on half the brick.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>If you change the 120 in the column calculation, you'll effectively be changing the length of the bricks, so she'll look like she's running on a different level.</p>
+<!-- /wp:paragraph --></div></div>
+<!-- /wp:media-text -->
+
+<!-- wp:image {"id":197,"sizeSlug":"full","linkDestination":"none"} -->
+<figure class="wp-block-image size-full"><img src="https://www.alphazoollc.com/blog/wp-content/uploads/2022/01/mia_standing_on_bricks.gif" alt="" class="wp-image-197"/></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Whew.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2 id="third-task-don-t-let-mia-run-through-bricks">Third Task: Don't let Mia run through bricks!</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>To stop Mia from running <em>through</em> the bricks, we need to check every brick in the list, see if Mia is too close to it, and push her back.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>For this, we're going to <strong>loop through the brick list</strong> again. Add this code to <strong>testBricks</strong>:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:code -->
+<pre class="wp-block-code"><code>function testBricks() {
+
+  mia.column = Math.floor((mia.x + 60) / 120);
+
+  // Don't test bricks if Mia is too far to the left or right.
+  if (mia.column &lt; -8 || mia.column &gt;= 70) return;
+
+  // Figure out the floor for Mia's current column.
+  let floor_height = game_height - 36 * stacks&#91;mia.column] - 4;
+
+  // First, check if Mia has run into thin air,
+  // like Wile E Coyote, and make her fall.
+  if (mia.y &lt; floor_height) {
+    mia.state = "falling"
+  }
+
+  // Check if Mia has fallen on top of the current stack.
+  if (mia.state == "falling" &amp;&amp; mia.y &gt;= floor_height &amp;&amp; mia.y_velocity &gt; 0) {
+    mia.y = floor_height;
+    mia.y_velocity = 0;
+    mia.state = "running";
+  }
+
+  <span class="has-inline-color has-vivid-red-color">// Then, loop through the whole brick list
+  for (i = 0; i &lt; bricks.length; i += 1) {
+    let brick = bricks&#91;i];
+
+    // If a brick is not falling, make sure Mia can't run through it.
+    if (brick.y_velocity == 0) {
+
+      // Calculate the floor height of this particular brick
+      this_brick_floor_height = game_height - 36 * stacks&#91;brick.column] - 4;
+      // If Mia is below this brick's floor height, and she's too close
+      // to the brick, push her back out.
+      if (Math.abs(mia.x - brick.x) &lt; 90 &amp;&amp; mia.y &gt; this_brick_floor_height) {
+        if (mia.x &lt; brick.x) mia.x = mia.x - 7;
+        if (mia.x &gt; brick.x) mia.x = mia.x + 7;
+      }
+    }
+  }</span>
+}</code></pre>
+<!-- /wp:code -->
+
+<!-- wp:paragraph -->
+<p>We loop through all the bricks in the list. For now, we only check the ones that aren't falling. For each such brick, we do math to find the <strong>floor height</strong> of the brick.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Then, if Mia is below the brick's floor height, and she's too close to the brick, we push her back out.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph {"style":{"color":{"background":"#afe695"}}} -->
+<p class="has-background" style="background-color:#afe695"><strong>Detail: </strong>We're using a function called <strong>Math.abs</strong> to check the <strong>absolute value</strong>. Mia's x position may be larger than the brick's x position, or it may be smaller, but we just want to see if the difference (positive or negative) is less than 90. So we take the absolute value of the difference; abs(-87) would be less than 90, and abs(87) would also be less than 90.<br><br>Why 90? The brick is 60 pixels wide from the center, and Mia is <em>about</em> 30 pixels wide from her center. Using 30+60 = 90 means the outer edge of Mia and the outer edge of the brick will be prevented from crossing.<br><br>In truth, Mia is probably just a bit wider than 30 pixels, which means by using 90, I'm letting them cross <em>just a little bit</em>. You can experiment with 80, 85, 90, 95, 100, et cetera, to see what margin of overlap looks best to you.<br><br>Finally, note that we check which side of the brick Mia's on, then push her forwards or backwards depending on the side.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":208,"sizeSlug":"full","linkDestination":"none"} -->
+<figure class="wp-block-image size-full"><img src="https://www.alphazoollc.com/blog/wp-content/uploads/2022/01/mia_cant_walk_through_bricks.gif" alt="" class="wp-image-208"/></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>This is starting to look like a game!</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:media-text {"mediaId":98,"mediaLink":"https://www.alphazoollc.com/blog/?attachment_id=98","mediaType":"image","mediaWidth":15,"verticalAlignment":"top","style":{"color":{"background":"#7cd4f9"}}} -->
+<div class="wp-block-media-text alignwide is-stacked-on-mobile is-vertically-aligned-top has-background" style="background-color:#7cd4f9;grid-template-columns:15% auto"><figure class="wp-block-media-text__media"><img src="https://www.alphazoollc.com/blog/wp-content/uploads/2022/01/daughter.png" alt="" class="wp-image-98 size-full"/></figure><div class="wp-block-media-text__content"><!-- wp:paragraph {"placeholder":"Content…"} -->
+<p>Now that we have bricks to jump on, it's a good time to go back and mess with gravity and jump powers.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>In the <strong>updateGame </strong>function, there's a line, <em>mia.y_velocity = -20,</em> which sets the intensity of Mia's jumps.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>There's also a line, <em>mia.y_velocity = mia.y_velocity + 0.8</em>, which sets the strength of gravity.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p><meta charset="utf-8">You can mess with both of those numbers to change Mia's jump style. If you want this planet to feel like the Moon, try setting the jump to -15 and the gravity to 0.3.</p>
+<!-- /wp:paragraph --></div></div>
+<!-- /wp:media-text -->
+
+<!-- wp:paragraph -->
+<p></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2 id="last-task-bop-mia-on-the-head-with-falling-bricks">Last Task: Bop Mia on the head with falling bricks!</h2>
+<!-- /wp:heading -->
+
+<!-- wp:image {"id":211,"sizeSlug":"large","linkDestination":"none"} -->
+<figure class="wp-block-image size-large"><img src="https://www.alphazoollc.com/blog/wp-content/uploads/2022/01/Screen-Shot-2022-01-20-at-2.04.42-PM-1024x467.png" alt="" class="wp-image-211"/></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p>To give Mia some <strong>danger</strong>, we're going to let her fall into pits and get bopped on the head by falling bricks.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Before we do this, let's talk about <strong>if statements</strong>.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>We've written a lot of things in our code like</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:code -->
+<pre class="wp-block-code"><code>if (mia.y &lt; floor_height) {
+  mia.state = "falling"
+}</code></pre>
+<!-- /wp:code -->
+
+<!-- wp:paragraph -->
+<p>and these are straight forward if you read them like English language: "if Mia's y value is less than floor_height, Mia is now falling."</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>But we can do much more complicated things with <strong>if statements</strong>. We can put anything that might be true or false into those ( ) parentheses, and the program will be happy to check, and then run the code if the thing is currently true.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>We can put <strong>if statements </strong>inside other <strong>if statements</strong>:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:code -->
+<pre class="wp-block-code"><code>if (shirt.color == "blue") {
+  print("Found a blue shirt.");
+  if (shirt.size = "small") {
+    print("Oh hey, it's a small blue shirt.")
+  }
+}</code></pre>
+<!-- /wp:code -->
+
+<!-- wp:paragraph {"style":{"color":{"background":"#afe695"}}} -->
+<p class="has-background" style="background-color:#afe695"><strong>Detail</strong>: in most programming languages, the = symbol means "assign a new value".<br><br>x = 5 means "x is now 5".<br><br>The == symbol means "these two different things are equal".<br><br>x == 5 means "the variable x is currently 5, right?"<br><br>The != symbol means "these two different things are not equal"<br><br>x != 5 means "the variable x is not currently 5, right?"</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>We can also give the program two different options, like a fork in the road, by using <strong>if and else</strong>:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:code -->
+<pre class="wp-block-code"><code>if (shirt.color == "blue") {
+  print("Nice blue shirt! My favorite!");
+} else if (shirt.color == "green") {
+  print("Ew, green shirt.");
+} else {
+  print("Ah, nice shirt.")
+}</code></pre>
+<!-- /wp:code -->
+
+<!-- wp:paragraph -->
+<p>We're going to use an <strong>if statement</strong> to give Mia some <strong>danger zones</strong>. Add this to the <strong>initializeGame</strong> function:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:code -->
+<pre class="wp-block-code"><code>function initializeGame() {
+
+  for (num = -1; num &lt; 8; num += 1) {
+    let blue_sky = makeSprite("Art/blue_sky.png");
+    blue_sky.position.set(game_width * num, 0);
+    stage.addChild(blue_sky);
+  }
+
+  for (num = -8; num &lt; 70; num += 1) {
+
+    <span class="has-inline-color has-vivid-red-color">if (num % 16 &lt; 14) {</span>
+      let brick = makeSprite("Art/brick.png");
+      brick.anchor.set(0.5,1);
+      brick.position.set(120 * num, game_height);
+      brick.tint = pick(colors);
+      stage.addChild(brick);
+      bricks.push(brick);
+
+      brick.column = num;
+      brick.y_velocity = 0;
+      stacks&#91;brick.column] = 1;
+    <span class="has-inline-color has-vivid-red-color">}
+    else {
+      stacks&#91;num] = -100;
+    }</span>
+  }
+
+  mia = makeAnimatedSprite("Art/mia_animations.json", "run");
+  mia.anchor.set(0.5, 0.9);
+  mia.position.set(200, game_height - 40);
+  stage.addChild(mia);
+  mia.animationSpeed = 0.3;
+  mia.play();
+  mia.state = "running";
+  mia.y_velocity = 0;
+}</code></pre>
+<!-- /wp:code -->
+
+<!-- wp:paragraph -->
+<p>Instead of starting every column with one brick, we will now leave some columns empty (using -100 to represent a deep pit). Now there are gaps where Mia can fall.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":218,"sizeSlug":"full","linkDestination":"none"} -->
+<figure class="wp-block-image size-full"><img src="https://www.alphazoollc.com/blog/wp-content/uploads/2022/01/stephen.gif" alt="" class="wp-image-218"/></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph {"style":{"color":{"background":"#afe695"}}} -->
+<p class="has-background" style="background-color:#afe695"><strong>Detail: </strong>Which columns? <strong>Modular arithmetic! Modular arithmetic!</strong><br><br>num % 7 is read as "num <strong>mod</strong> 7". Mod means you wrap around, like days of the week, or hours on a clock.<br><br>5 mod 7 is 5.<br><br>6 mod 7 is 6.<br><br>7 mod 7 is 0.<br><br>8 mod 7 is 1.<br><br>9 mod 7 is 2.<br><br>...<br><br>14 mod 7 is 0.<br><br>15 mod 7 is 1.<br><br>In the game, we use mod 16.   <em>if (num % 16 &lt; 14)</em> just means  "for every 16 things, the first 14 things look like this", and then you make bricks.<br><br>"else", or "otherwise", you make no bricks, and just leave a deep pit.<br><br>So the last two spots out of every 16 spots are deep pit spots.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Next up, we make sure to <em>reset the game </em>whenever Mia has fallen too far, and make sure <strong>updateGame</strong> works right when Mia's state is kaput. Add this code to <strong>updateGame</strong>:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:code -->
+<pre class="wp-block-code"><code>function updateGame(diff) {
+
+  // Don't try to update the game until we've created Mia,
+  // or the game will crash.
+  if (mia == null) return;
+
+  dropBricks();
+
+  // If the right key got pushed, move Mia to the right
+  if (key_down&#91;"ArrowRight"]) {
+    mia.last_x = mia.x;
+    mia.x = mia.x + 7;
+<meta charset="utf-8">    <s>mia.scale.set(1,1);</s>
+    <span class="has-inline-color has-vivid-red-color">if (mia.state != "kaput") mia.scale.set(1,1);</span>
+  }
+
+  // If the left key got pushed, move Mia to the left
+  if (key_down&#91;"ArrowLeft"]) {
+    mia.last_x = mia.x;
+    mia.x = mia.x - 7;
+    <meta charset="utf-8"><s>mia.scale.set(-1,1);</s>
+    <span class="has-inline-color has-vivid-red-color">if (mia.state != "kaput") mia.scale.set(-1,1);</span>
+  }
+
+  // If the space bar got pushed, make Mia jump
+  if (key_down&#91;" "] &amp;&amp; mia.state == "running") {
+    mia.state = "jumping";
+    mia.y_velocity = -20;
+  }
+
+  // If Mia is jumping, move her upwards, use gravity to pull her downwards,
+  // and if she reaches the ground, stop the jump.
+<meta charset="utf-8">  <s>if (mia.state == "jumping" || mia.state == "falling") {</s>
+  <span class="has-inline-color has-vivid-red-color">if (mia.state == "jumping" || mia.state == "falling" || mia.state == "kaput") {</span>
+    mia.y = mia.y + mia.y_velocity;
+    mia.y_velocity = mia.y_velocity + 0.8;
+
+    if (mia.y_velocity &gt; 0 &amp;&amp; mia.state == "jumping") {
+      // switch to falling
+      mia.state = "falling";
+    }
+  }
+
+  testBricks();
+
+  if (mia.y &gt; 1200) {
+    stage.removeChildren();
+    bricks = &#91;];
+    stacks = {};
+    initializeGame();
+  }
+
+  followMia();
+}</code></pre>
+<!-- /wp:code -->
+
+<!-- wp:paragraph -->
+<p>When Mia's y position gets too far below the screen, this code removes everything from the stage, empties the brick list, empties the brick stacks, and calls the <strong>initializeGame</strong> function, which starts the game over.<br><br>Very last for today, add this head bopping code to <strong>testBricks</strong>:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:code -->
+<pre class="wp-block-code"><code>function testBricks() {
+
+  ...
+  ...
+  ...
+
+  // Then, loop through the whole brick list
+  for (i = 0; i &lt; bricks.length; i += 1) {
+    let brick = bricks&#91;i];
+
+    // If a brick is not falling, make sure Mia can't run through it.
+    if (brick.y_velocity == 0) {
+
+      // Calculate the floor height of this particular brick
+      this_brick_floor_height = game_height - 36 * stacks&#91;brick.column] - 4;
+      // If Mia is below this brick's floor height, and she's too close
+      // to the brick, push her back out.
+      if (Math.abs(mia.x - brick.x) &lt; 90 &amp;&amp; mia.y &gt; this_brick_floor_height) {
+        if (mia.x &lt; brick.x) mia.x = mia.x - 7;
+        if (mia.x &gt; brick.x) mia.x = mia.x + 7;
+      }
+    }
+    <span class="has-inline-color has-vivid-red-color">else if (brick.y_velocity &gt; 0 &amp;&amp; mia.state != "kaput") {
+      // If Mia is too close to a falling brick, she goes kaput.
+      if (Math.abs(mia.x - brick.x) &lt; 80
+        &amp;&amp; brick.y &lt; mia.y - 10
+        &amp;&amp; brick.y &gt; mia.y - 175) {
+        mia.state = "kaput";
+        mia.scale.y = -1;
+        mia.y_velocity = -5;
+        mia.y = mia.y - 175;
+      }
+    }</span>
+  }
+}</code></pre>
+<!-- /wp:code -->
+
+<!-- wp:paragraph -->
+<p>Inside the loop which checks all the bricks, there's already an <strong>if statement</strong> to make sure Mia can't run through a brick that's stopped.<br><br>Below that, we add an <strong>else statement</strong>; "otherwise, if the brick has y velocity, and Mia isn't already kaput, do this".</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>What we do is check if Mia's x position is too close to the brick, and if her y position is roughly the same as the brick. In that case, we flip her upside down, set her state to kaput, and give her a tiny upwards bump so the upside down falling animation looks good.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":214,"sizeSlug":"full","linkDestination":"none"} -->
+<figure class="wp-block-image size-full"><img src="https://www.alphazoollc.com/blog/wp-content/uploads/2022/01/mia_kaput.gif" alt="" class="wp-image-214"/></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p>Good job! You've got a real game going now.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":215,"sizeSlug":"large","linkDestination":"none"} -->
+<figure class="wp-block-image size-large"><img src="https://www.alphazoollc.com/blog/wp-content/uploads/2022/01/carl_weathers_2-1024x576.png" alt="" class="wp-image-215"/></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p>Tomorrow we're going to <a href="https://www.youtube.com/watch?v=Fy0aCDmgnxg" title="make it juicy">make it juicy</a>.</p>
+<!-- /wp:paragraph -->

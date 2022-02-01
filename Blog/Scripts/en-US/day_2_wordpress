@@ -1,0 +1,878 @@
+Quarantine Game Jam Day 2
+https://www.alphazoollc.com/blog/quarantine-game-jam-day-2/
+
+
+<!-- wp:paragraph -->
+<p><meta charset="utf-8">(Activity time: about 60 minutes)</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>(<a href="https://alphazoollc.com/GameJam/Day2.zip" title="Download the Day Two Files Here">Download the Day Two Files Here</a>)</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Previous Posts:<br><a href="https://www.alphazoollc.com/blog/quarantine-game-jam-day-1/" title="Game Jam Day 1">Game Jam Day 1</a></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2 id="intro">Intro</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Hello, and welcome to day 2 of the Dad and Daughter Quarantine Game Jam Tutorial!</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:gallery {"linkTo":"none"} -->
+<figure class="wp-block-gallery has-nested-images columns-default is-cropped"><!-- wp:image {"id":131,"sizeSlug":"large","linkDestination":"none"} -->
+<figure class="wp-block-image size-large"><img src="https://www.alphazoollc.com/blog/wp-content/uploads/2022/01/bluey_excited-1.gif" alt="" class="wp-image-131"/></figure>
+<!-- /wp:image -->
+
+<!-- wp:image {"id":132,"sizeSlug":"large","linkDestination":"none"} -->
+<figure class="wp-block-image size-large"><img src="https://www.alphazoollc.com/blog/wp-content/uploads/2022/01/mia_jumping-1.gif" alt="" class="wp-image-132"/></figure>
+<!-- /wp:image --></figure>
+<!-- /wp:gallery -->
+
+<!-- wp:paragraph -->
+<p></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p><a href="https://www.alphazoollc.com/blog/quarantine-game-jam-day-1/" title="Yesterday">Yesterday</a> we started making <strong>Mia's Daring Escape</strong>. We set up the game, added Mia and a few bricks to the screen, and used the keyboard to move Mia around.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Today we're going to continue by giving Mia a floor of bricks where she can run and jump!</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2 id="first-task-put-mia-in-the-right-place">First Task: Put Mia in the right place</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>We begin where we left off yesterday. You can use the files you already have, or <a href="https://alphazoollc.com/GameJam/Day2.zip" title="download the day two files">download the day two files</a> and start from there. The day two files have today's code changes to help you if you get lost.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>This is what the game looks like right now:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":120,"sizeSlug":"full","linkDestination":"none"} -->
+<figure class="wp-block-image size-full"><img src="https://www.alphazoollc.com/blog/wp-content/uploads/2022/01/bricks_on_screen.jpg" alt="" class="wp-image-120"/></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>We need to start by deleting those bricks and moving Mia to the bottom of the screen, where she'll spend most of her time.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Open game.js, and <em>delete</em> the following lines:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:code -->
+<pre class="wp-block-code"><code>
+// Welcome! This is where you'll write your game code.
+// Anything with two // slashes in front is a comment.
+// The computer ignores comments. They're for humans
+// to explain things to other humans.
+
+let mia = null;
+<s>let brick_1 = null;
+let brick_2 = null;</s>
+
+
+function initializeGame() {
+
+  let blue_sky = makeSprite("Art/blue_sky.png");
+  blue_sky.position.set(0, 0);
+  stage.addChild(blue_sky);
+
+  mia = makeAnimatedSprite("Art/mia_animations.json", "run");
+  mia.position.set(200, 200);
+  stage.addChild(mia);
+  mia.animationSpeed = 0.3;
+  mia.play();
+
+  <s>brick_1 = makeSprite("Art/brick.png");
+  brick_1.position.set(500, 200);
+  brick_1.tint = color(1,0,0);
+  stage.addChild(brick_1);
+
+  brick_2 = makeSprite("Art/brick.png");
+  brick_2.position.set(200, 400);
+  brick_2.tint = color(0,0,1);
+  stage.addChild(brick_2);</s>
+}
+
+
+function updateGame(diff) {
+
+  // If the right key got pushed, move Mia to the right
+  if (key_down&#91;"ArrowRight"]) {
+    mia.x = mia.x + 5;
+  }
+
+  // If the left key got pushed, move Mia to the left
+  if (key_down&#91;"ArrowLeft"]) {
+    mia.x = mia.x - 5;
+  }
+
+<s>  // If the down key got pushed, move Mia down
+  if (key_down&#91;"ArrowDown"]) {
+    mia.y = mia.y + 5;
+  }
+
+  // If the up key got pushed, move Mia up
+  if (key_down&#91;"ArrowUp"]) {
+    mia.y = mia.y - 5;
+  }</s>
+}
+
+</code></pre>
+<!-- /wp:code -->
+
+<!-- wp:paragraph -->
+<p>Now it's just Mia on the screen, and we've gotten rid of the code that lets us move up and down.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Before we put Mia on the bottom of the screen, we need to talk about <strong>anchors</strong>.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>This is one of the images in Mia's animation:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":141,"sizeSlug":"full","linkDestination":"none"} -->
+<figure class="wp-block-image size-full"><img src="https://www.alphazoollc.com/blog/wp-content/uploads/2022/01/mia_anchor_1.png" alt="" class="wp-image-141"/></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>There's a lot of empty space around Mia.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>This is what that picture looks like on the screen:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":142,"sizeSlug":"full","linkDestination":"none"} -->
+<figure class="wp-block-image size-full"><img src="https://www.alphazoollc.com/blog/wp-content/uploads/2022/01/mia_anchor_2.jpg" alt="" class="wp-image-142"/></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>When we give <strong>x, y coordinates </strong>for Mia, the computer starts drawing from the top left corner of her image.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>But we're making a jumping game, which means we want to work with the coordinates right beneath where Mia is standing:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":143,"sizeSlug":"full","linkDestination":"none"} -->
+<figure class="wp-block-image size-full"><img src="https://www.alphazoollc.com/blog/wp-content/uploads/2022/01/mia_anchor_3.jpg" alt="" class="wp-image-143"/></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Instead of having to do a lot of extra calculations, we tell the computer to change Mia's <strong>anchor point</strong>.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":144,"sizeSlug":"full","linkDestination":"none"} -->
+<figure class="wp-block-image size-full"><img src="https://www.alphazoollc.com/blog/wp-content/uploads/2022/01/mia_anchor_4.jpg" alt="" class="wp-image-144"/></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p>An anchor point is the point in an image that the computer uses for drawing. When you tell the computer to draw something at coordinates 300, 400, the computer moves 300 pixels to the right, then 400 pixels down, then draws the image so that the <strong>anchor point</strong> is right at that center spot.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p><strong>Anchor points</strong> are given in fractions. Look at the image above. That point just below the center of Mia is <em>halfway<strong> </strong></em>between the left and right sides of the image, or 0.5.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>And it's 90% of the way towards the bottom of the image, or 0.9.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:media-text {"mediaId":97,"mediaLink":"https://www.alphazoollc.com/blog/?attachment_id=97","mediaType":"image","mediaWidth":15,"verticalAlignment":"top","style":{"color":{"background":"#ede193"}}} -->
+<div class="wp-block-media-text alignwide is-stacked-on-mobile is-vertically-aligned-top has-background" style="background-color:#ede193;grid-template-columns:15% auto"><figure class="wp-block-media-text__media"><img src="https://www.alphazoollc.com/blog/wp-content/uploads/2022/01/dad.png" alt="" class="wp-image-97 size-full"/></figure><div class="wp-block-media-text__content"><!-- wp:paragraph {"placeholder":"Content…"} -->
+<p>If your child hasn't learned about number lines and decimals yet, this is an excellent example for teaching.</p>
+<!-- /wp:paragraph --></div></div>
+<!-- /wp:media-text -->
+
+<!-- wp:paragraph -->
+<p>So we're going to set Mia's <strong>anchor point</strong> at 0.5, 0.9, and then put her almost at the bottom of the screen.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Go ahead and add this code together:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:code -->
+<pre class="wp-block-code"><code>function initializeGame() {
+
+  let blue_sky = makeSprite("Art/blue_sky.png");
+  blue_sky.position.set(0, 0);
+  stage.addChild(blue_sky);
+
+  mia = makeAnimatedSprite("Art/mia_animations.json", "run");
+  <s>mia.position.set(200, 200);</s>
+  <span class="has-inline-color has-vivid-red-color">mia.anchor.set(0.5, 0.9);
+  mia.position.set(200, game_height - 40);</span>
+  stage.addChild(mia);
+  mia.animationSpeed = 0.3;
+  mia.play();
+}</code></pre>
+<!-- /wp:code -->
+
+<!-- wp:media-text {"mediaId":97,"mediaLink":"https://www.alphazoollc.com/blog/?attachment_id=97","mediaType":"image","mediaWidth":15,"verticalAlignment":"top","style":{"color":{"background":"#ede193"}}} -->
+<div class="wp-block-media-text alignwide is-stacked-on-mobile is-vertically-aligned-top has-background" style="background-color:#ede193;grid-template-columns:15% auto"><figure class="wp-block-media-text__media"><img src="https://www.alphazoollc.com/blog/wp-content/uploads/2022/01/dad.png" alt="" class="wp-image-97 size-full"/></figure><div class="wp-block-media-text__content"><!-- wp:paragraph {"placeholder":"Content…"} -->
+<p>Remember, you can always press Command-R on a Mac or Ctrl-R on Windows to reset the game.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Also, now is a great time to talk about the <strong>debug console</strong>. If you press Command-Option-J (edit: it's Command-Option-I) on a Mac or Ctrl-Shift-J on Windows, you'll open up a little side window where you can print information or see any errors. You can press the same keys to close it again. Alternately, you can go to the View menu above and choose "Toggle Developer Tools".</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>The errors usually show up as red text, and you can usually google the red text for some good answers to your problems.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>But of course, if you get really stuck, please feel free to post questions in the comments below, or mail me at matt.carlin@alphazoollc.com, and I'll do my best to help out.</p>
+<!-- /wp:paragraph --></div></div>
+<!-- /wp:media-text -->
+
+<!-- wp:paragraph -->
+<p>Make sure you delete the old position line to make room for the new one.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>I've provided some nice variables for working with the edges of the screen. <strong>game_width</strong> and <strong>game_height</strong> are 1024 and 576, and you can use these instead of having to do the math to figure out stuff near the right and bottom sides of the screen.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>So we've set Mia's anchor beneath her feet, and we've set her y position to game_height - 40, which means 40 pixels from the bottom of the screen.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Mia should look like this now:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":145,"sizeSlug":"full","linkDestination":"none"} -->
+<figure class="wp-block-image size-full"><img src="https://www.alphazoollc.com/blog/wp-content/uploads/2022/01/mia_anchor_5.jpg" alt="" class="wp-image-145"/></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:media-text {"mediaId":98,"mediaLink":"https://www.alphazoollc.com/blog/?attachment_id=98","mediaType":"image","mediaWidth":15,"verticalAlignment":"top","style":{"color":{"background":"#7cd4f9"}}} -->
+<div class="wp-block-media-text alignwide is-stacked-on-mobile is-vertically-aligned-top has-background" style="background-color:#7cd4f9;grid-template-columns:15% auto"><figure class="wp-block-media-text__media"><img src="https://www.alphazoollc.com/blog/wp-content/uploads/2022/01/daughter.png" alt="" class="wp-image-98 size-full"/></figure><div class="wp-block-media-text__content"><!-- wp:paragraph {"placeholder":"Content…"} -->
+<p>What do you think will happen if you set Mia's anchor to 0.5, 1.0?</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Make a guess, then try it out!</p>
+<!-- /wp:paragraph --></div></div>
+<!-- /wp:media-text -->
+
+<!-- wp:paragraph -->
+<p>We also want to make Mia a little bit faster, and we want to make her turn around if she's running to the left. Add this code together:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:code -->
+<pre class="wp-block-code"><code>function updateGame(diff) {
+
+  // If the right key got pushed, move Mia to the right
+  if (key_down&#91;"ArrowRight"]) {
+    <meta charset="utf-8"><s>mia.x = mia.x + 5;</s>
+    <span class="has-inline-color has-vivid-red-color">mia.x = mia.x + 7;
+    mia.scale.set(1,1);</span>
+  }
+
+  // If the left key got pushed, move Mia to the left
+  if (key_down&#91;"ArrowLeft"]) {
+    <s>mia.x = mia.x - 5;</s>
+    <span class="has-inline-color has-vivid-red-color">mia.x = mia.x - 7;
+    mia.scale.set(-1,1);</span>
+  }
+}</code></pre>
+<!-- /wp:code -->
+
+<!-- wp:paragraph -->
+<p>Now when you press the left key to run left, Mia should face left:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":147,"sizeSlug":"full","linkDestination":"none"} -->
+<figure class="wp-block-image size-full"><img src="https://www.alphazoollc.com/blog/wp-content/uploads/2022/01/mia_left.jpg" alt="" class="wp-image-147"/></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>First, we make Mia a little faster by changing the distance she moves when we push the keys.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Second, in addition to <strong>position</strong> and <strong>anchor</strong>, we can change the <strong>scale</strong> of a sprite. This means making it bigger or smaller.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>1 is the normal value. 2 is twice as wide, or twice as tall. 0.5 is half as wide, or half as tall. Finally, -1 means "flip it backwards".</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>We've set Mia to -1 on the x axis, so her left and right are flipped. But we've set her to 1 on the y axis, so she's not upside down or super tall or anything.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:media-text {"mediaId":98,"mediaLink":"https://www.alphazoollc.com/blog/?attachment_id=98","mediaType":"image","mediaWidth":15,"verticalAlignment":"top","style":{"color":{"background":"#7cd4f9"}}} -->
+<div class="wp-block-media-text alignwide is-stacked-on-mobile is-vertically-aligned-top has-background" style="background-color:#7cd4f9;grid-template-columns:15% auto"><figure class="wp-block-media-text__media"><img src="https://www.alphazoollc.com/blog/wp-content/uploads/2022/01/daughter.png" alt="" class="wp-image-98 size-full"/></figure><div class="wp-block-media-text__content"><!-- wp:paragraph {"placeholder":"Content…"} -->
+<p>You know what we're going to do now. Try changing the scale numbers. Can you make Mia go upside down? Can you make her super huge or super tiny or super wide?</p>
+<!-- /wp:paragraph --></div></div>
+<!-- /wp:media-text -->
+
+<!-- wp:paragraph -->
+<p>Anyway, now Mia's in place, and we're ready to add a *bunch* of bricks.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2 id="second-task-add-a-bunch-of-bricks">Second Task: Add a bunch of bricks!</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>On day one, when we added two bricks, we had to write code for each brick, and we had to name them differently. That was fine for just two bricks, but <strong>Mia's Daring Escape</strong> is going to have dozens of bricks! Hundreds of bricks!</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>It would be really annoying to write the code for every brick.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Instead, we're going to use <strong>a loop</strong>.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>A loop is when you make the computer do something over and over again a certain number of times. Maybe forever.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>We're going to make a loop that adds ten bricks to the screen.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>This is nice, because later, when we want way more than ten bricks, we only need to change the loop number to make it higher.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:media-text {"mediaId":97,"mediaLink":"https://www.alphazoollc.com/blog/?attachment_id=97","mediaType":"image","mediaWidth":15,"verticalAlignment":"top","style":{"color":{"background":"#ede193"}}} -->
+<div class="wp-block-media-text alignwide is-stacked-on-mobile is-vertically-aligned-top has-background" style="background-color:#ede193;grid-template-columns:15% auto"><figure class="wp-block-media-text__media"><img src="https://www.alphazoollc.com/blog/wp-content/uploads/2022/01/dad.png" alt="" class="wp-image-97 size-full"/></figure><div class="wp-block-media-text__content"><!-- wp:paragraph -->
+<p>Sigh. Loops are ugly, true in almost every programming language, and there's no nice way to teach them. I'm sorry.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":152,"sizeSlug":"full","linkDestination":"none"} -->
+<figure class="wp-block-image size-full"><img src="https://www.alphazoollc.com/blog/wp-content/uploads/2022/01/loop_diagram-2.png" alt="" class="wp-image-152"/></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p><meta charset="utf-8">The loop starts with "for", then inside ( ) parentheses you say how you want the loop to go. Then in between { } curly brackets, you write the code that you want to happen over and over.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>What's nice is you can count the number of times you've been in the loop, and use this as a <strong>variable</strong> in your code. So, for instance, we're going to move 120 pixels each time we put another brick down, and we'll use the loop number to set a different position every time.</p>
+<!-- /wp:paragraph --></div></div>
+<!-- /wp:media-text -->
+
+<!-- wp:paragraph -->
+<p>Let's write the loop:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:code -->
+<pre class="wp-block-code"><code>let mia = null;
+<span class="has-inline-color has-vivid-red-color">let bricks = &#91;];
+let colors = &#91;
+  color(1,0,0), // Red
+  color(0,1,0), // Green
+  color(0,0,1), // Blue
+]</span>
+
+
+function initializeGame() {
+
+  let blue_sky = makeSprite("Art/blue_sky.png");
+  blue_sky.position.set(0, 0);
+  stage.addChild(blue_sky);
+
+  <span class="has-inline-color has-vivid-red-color">for (num = 0; num &lt; 10; num += 1) {
+    let brick = makeSprite("Art/brick.png");
+    brick.anchor.set(0.5,1);
+    brick.position.set(120 * num, game_height);
+    brick.tint = pick(colors);
+    stage.addChild(brick);</span>
+    <span class="has-inline-color has-vivid-red-color">bricks.push(brick);
+  }</span>
+
+  mia = makeAnimatedSprite("Art/mia_animations.json", "run");
+  mia.anchor.set(0.5, 0.9);
+  mia.position.set(200, game_height - 40);
+  stage.addChild(mia);
+  mia.animationSpeed = 0.3;
+  mia.play();
+}
+</code></pre>
+<!-- /wp:code -->
+
+<!-- wp:image {"id":153,"sizeSlug":"full","linkDestination":"none"} -->
+<figure class="wp-block-image size-full"><img src="https://www.alphazoollc.com/blog/wp-content/uploads/2022/01/mia_brick_floor.jpg" alt="" class="wp-image-153"/></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>We start by making two <strong>lists</strong>. One is a list of bricks, and the other is a list of colors. We'll talk more about lists later, but for now, lists are exactly like in real life. <em>Milk, eggs, flour, sugar</em> is a list.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Then we write our loop. Inside the loop, we do the same sprite making code we've done a few times before.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph {"style":{"color":{"background":"#afe695"}}} -->
+<p class="has-background" style="background-color:#afe695"><strong>Detail</strong>: We didn't have to name each brick differently, brick_1, brick_2, brick_3, etc. That's because when you define something inside a loop, the variable name only lasts for one loop, and you can re-use it on the next go around.<br><br>You've no doubt noticed that we write <strong>let</strong> in a bunch of places. <strong>let</strong> says "make me a new variable with this name".<br><br>If you try to use <strong>let</strong> to make a new variable with the same name as an old one, the program will tell you that's illegal, and it will crash.<br><br>Variables that get created outside any function are <strong>global</strong>. You can use them everywhere, but you can't re-use the name for something else.<br><br>Variables that get created inside a function or inside a loop (basically, inside { } curly braces) are <strong>local</strong>, and they live and die in that local area. You can't use them outside, but you <em>can</em> use the same names over again.<br><br>All of this is called <strong>scope</strong>.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>When we tint the bricks, we use a new function called <strong>pick</strong> to pick a random color from the list of colors. That means the bricks are randomly red, blue, or green.<br><br>Try resetting the program a few times. The brick colors should change.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>We also write "<meta charset="utf-8"><span class="has-inline-color has-black-color">bricks.push(brick)", which </span>adds the new brick to our list of bricks. We'll use this list in another lesson.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2 id="third-task-scroll-the-screen">Third Task: Scroll the Screen!</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p><strong>Mia's Daring Escape </strong>is a platform game. That means we're going to run a long distance, and the screen is going to have to scroll to keep up.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Right now, when you go too far left or right, Mia just runs off the edge of the screen.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>We need to write code to make the game follow Mia, and we need to make the level bigger.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>While Mia is running great distances, we want to keep Mia roughly in the center of the screen. In order to accomplish this, we make a tracker. The tracker can be up to 100 pixels away from Mia.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Then, we move the <em>whole game stage<strong> </strong></em>so that the tracker is in the center of the screen.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>And we're going to do all of this in a new <strong>function</strong>!</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Add this to the code:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:code -->
+<pre class="wp-block-code"><code>let mia = null;
+let bricks = &#91;];
+let colors = &#91;
+  color(1,0,0), // Red
+  color(0,1,0), // Green
+  color(0,0,1), // Blue
+]
+
+<span class="has-inline-color has-vivid-red-color">let tracker = 0;</span>
+
+
+function initializeGame() {
+
+  let blue_sky = makeSprite("Art/blue_sky.png");
+  blue_sky.position.set(0, 0);
+  stage.addChild(blue_sky);
+
+  for (num = 0; num &lt; 10; num += 1) {
+    let brick = makeSprite("Art/brick.png");
+    brick.anchor.set(0.5,1);
+    brick.position.set(120 * num, game_height);
+    brick.tint = pick(colors);
+    stage.addChild(brick);
+    bricks.push(brick);
+  }
+
+  mia = makeAnimatedSprite("Art/mia_animations.json", "run");
+  mia.anchor.set(0.5, 0.9);
+  mia.position.set(200, game_height - 40);
+  stage.addChild(mia);
+  mia.animationSpeed = 0.3;
+  mia.play();
+}
+
+<span class="has-inline-color has-vivid-red-color">// Keep Mia roughly in the center of the screen by using a tracker
+// which stays within 100 pixels of Mia, and then moving the whole stage
+// so that the tracker stays in the center of the screen.
+function followMia() {
+
+  if (mia.x - tracker &gt; 100) {
+    tracker = mia.x - 100;
+  }
+
+  if (tracker - mia.x &gt; 100) {
+    tracker = mia.x + 100;
+  }
+
+  stage.x = (game_width / 2 - tracker);
+}</span>
+
+
+function updateGame(diff) {
+
+  // Don't try to update the game until we've created Mia,
+  // or the game will crash.
+  if (mia == null) return;
+
+  // If the right key got pushed, move Mia to the right
+  if (key_down&#91;"ArrowRight"]) {
+    mia.x = mia.x + 7;
+    mia.scale.set(1,1);
+  }
+
+  // If the left key got pushed, move Mia to the left
+  if (key_down&#91;"ArrowLeft"]) {
+    mia.x = mia.x - 7;
+    mia.scale.set(-1,1);
+  }
+
+  <span class="has-inline-color has-vivid-red-color">followMia();</span>
+}
+
+</code></pre>
+<!-- /wp:code -->
+
+<!-- wp:media-text {"mediaId":97,"mediaLink":"https://www.alphazoollc.com/blog/?attachment_id=97","mediaType":"image","mediaWidth":15,"verticalAlignment":"top","style":{"color":{"background":"#ede193"}}} -->
+<div class="wp-block-media-text alignwide is-stacked-on-mobile is-vertically-aligned-top has-background" style="background-color:#ede193;grid-template-columns:15% auto"><figure class="wp-block-media-text__media"><img src="https://www.alphazoollc.com/blog/wp-content/uploads/2022/01/dad.png" alt="" class="wp-image-97 size-full"/></figure><div class="wp-block-media-text__content"><!-- wp:paragraph {"placeholder":"Content…"} -->
+<p><strong>Reminder:</strong> you can always press Command-R on a Mac or Ctrl-R on Windows to reset the game.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p><strong>Also reminder: </strong>you can press Command-Option-J (edit: it's Command-Option-I) on a Mac or Ctrl-Shift-J on Windows to bring up the <strong>debug console</strong> to see any errors!</p>
+<!-- /wp:paragraph --></div></div>
+<!-- /wp:media-text -->
+
+<!-- wp:media-text {"mediaId":97,"mediaLink":"https://www.alphazoollc.com/blog/?attachment_id=97","mediaType":"image","mediaWidth":15,"verticalAlignment":"top","style":{"color":{"background":"#ede193"}}} -->
+<div class="wp-block-media-text alignwide is-stacked-on-mobile is-vertically-aligned-top has-background" style="background-color:#ede193;grid-template-columns:15% auto"><figure class="wp-block-media-text__media"><img src="https://www.alphazoollc.com/blog/wp-content/uploads/2022/01/dad.png" alt="" class="wp-image-97 size-full"/></figure><div class="wp-block-media-text__content"><!-- wp:paragraph {"placeholder":"Content…"} -->
+<p>There's a lot going on here. We make a <strong>new variable</strong> called tracker by writing "let tracker" at the top.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>We make a new <strong>function</strong> called followMia, and we call that function by writing followMia() at the bottom of updateGame.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p><strong>followMia </strong>is where we do our tracking and our screen shifting.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>First, we check to see if the tracker is more than 100 pixels behind mia's x position, and if so, we move it to 100 behind.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Then, we check to see if the tracker is more than 100 pixels ahead of mia's x position, and if so, we move it to 100 ahead.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>This means Mia can run around to the sides of the tracker a little bit, but if she gets too far, the tracker will snap in place and start following her.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Finally, we move the whole game stage to put the tracker in the center of the screen! The tracker acts like a sort of focus point for the camera; it will always stare at the tracker.</p>
+<!-- /wp:paragraph --></div></div>
+<!-- /wp:media-text -->
+
+<!-- wp:paragraph {"style":{"color":{"background":"#afe695"}}} -->
+<p class="has-background" style="background-color:#afe695"><strong>Detail</strong>: Why is the stage being pushed to (game_width / 2 - tracker)?<br><br>To come up with that number, we do a little bit of algebra.<br><br>The tracker is sitting on the stage. If the stage x is 100, and the tracker is 200, the tracker will be at 300 on the screen. In general, we want:<br><br>tracker + stage.x == game_width/2<br><br>Rewrite this to get:<br><br>stage.x == game_width/2 - tracker</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Hooray! Now Mia can run... off... into the blackness of space.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:gallery {"linkTo":"none"} -->
+<figure class="wp-block-gallery has-nested-images columns-default is-cropped"><!-- wp:image {"id":157,"sizeSlug":"large","linkDestination":"none"} -->
+<figure class="wp-block-image size-large"><img src="https://www.alphazoollc.com/blog/wp-content/uploads/2022/01/mia_empty_space.jpg" alt="" class="wp-image-157"/></figure>
+<!-- /wp:image --></figure>
+<!-- /wp:gallery -->
+
+<!-- wp:paragraph -->
+<p></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:media-text {"mediaId":98,"mediaLink":"https://www.alphazoollc.com/blog/?attachment_id=98","mediaType":"image","mediaWidth":15,"verticalAlignment":"top","style":{"color":{"background":"#7cd4f9"}}} -->
+<div class="wp-block-media-text alignwide is-stacked-on-mobile is-vertically-aligned-top has-background" style="background-color:#7cd4f9;grid-template-columns:15% auto"><figure class="wp-block-media-text__media"><img src="https://www.alphazoollc.com/blog/wp-content/uploads/2022/01/daughter.png" alt="" class="wp-image-98 size-full"/></figure><div class="wp-block-media-text__content"><!-- wp:paragraph {"placeholder":"Content…"} -->
+<p>Okay, so we need more sky and more bricks.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph {"placeholder":"Content…"} -->
+<p>More bricks are easy!</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Just change the loop numbers, like this:</p>
+<!-- /wp:paragraph --></div></div>
+<!-- /wp:media-text -->
+
+<!-- wp:code -->
+<pre class="wp-block-code"><code><mark style="background-color:rgba(0, 0, 0, 0)" class="has-inline-color has-vivid-red-color"><meta charset="utf-8"></mark><mark style="background-color:rgba(0, 0, 0, 0)" class="has-inline-color has-black-color"><s>for (num = 0; num &lt; 10; num += 1) {</s></mark>
+<mark style="background-color:rgba(0, 0, 0, 0)" class="has-inline-color has-vivid-red-color">for (num = -8; num &lt; 70; num += 1) {</mark>
+  let brick = makeSprite("Art/brick.png");
+  brick.anchor.set(0.5,1);
+  brick.position.set(120 * num, game_height);
+  brick.tint = pick(colors);
+  stage.addChild(brick);
+  bricks.push(brick);
+}</code></pre>
+<!-- /wp:code -->
+
+<!-- wp:paragraph -->
+<p>Boom. Tons of bricks.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>For the sky, we're going to need to put the sky picture into its own loop.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Do this:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:code -->
+<pre class="wp-block-code"><code><s>let blue_sky = makeSprite("Art/blue_sky.png");
+blue_sky.position.set(0, 0);
+stage.addChild(blue_sky);</s>
+
+for (num = -1; num &lt; 8; num += 1) {
+  let blue_sky = makeSprite("Art/blue_sky.png");
+  blue_sky.position.set(game_width * num, 0);
+  stage.addChild(blue_sky);
+}</code></pre>
+<!-- /wp:code -->
+
+<!-- wp:paragraph -->
+<p>Lots of sky now too. The sky loop is smaller because the sky picture is bigger. Note that each sky picture is a whole game_width further than the last. That's 1024 pixels for each sky.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Later we'll add boundaries, so Mia can't run off into empty space. But for now, you should be able to run a long time to the right before running out of bricks and sky.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Pretty good. We've just got one last thing to do today.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2 id="last-task-make-mia-jump">Last Task: Make Mia jump!</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:media-text {"mediaId":97,"mediaLink":"https://www.alphazoollc.com/blog/?attachment_id=97","mediaType":"image","mediaWidth":15,"verticalAlignment":"top","style":{"color":{"background":"#ede193"}}} -->
+<div class="wp-block-media-text alignwide is-stacked-on-mobile is-vertically-aligned-top has-background" style="background-color:#ede193;grid-template-columns:15% auto"><figure class="wp-block-media-text__media"><img src="https://www.alphazoollc.com/blog/wp-content/uploads/2022/01/dad.png" alt="" class="wp-image-97 size-full"/></figure><div class="wp-block-media-text__content"><!-- wp:paragraph {"placeholder":"Content…"} -->
+<p>You're pretty tired again. I can see it.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Just like yesterday, we're not going to think too hard about this last task. It's kind of a bonus.</p>
+<!-- /wp:paragraph --></div></div>
+<!-- /wp:media-text -->
+
+<!-- wp:paragraph -->
+<p>The last thing we have to do is make Mia jump.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>To do this, we're going to give Mia a <strong>state</strong> and a <strong>velocity</strong>.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Mia's <strong>state</strong> can be either "running" or "jumping". When the player presses spacebar, if Mia's not already jumping, we'll switch her state to jumping.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Mia's velocity is how fast she's moving and in what direction. For now, we're just going to give Mia a velocity in the y direction, up and down.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>The way velocity works in beginner game programming is this: every time you call updateGame, you change the position by adding velocity. Remember that the updateGame function is called about 60 times a second. So if the character starts at y = 100, and the velocity is 5, then on one frame, the character will go from 100 to 105, and on the next, from 105 to 110, and so forth, and after 1 second (60 frames), the character will be at 400 (that's 100 + 5 * 60).</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>For a jump, you start by setting the velocity upwards (negative, towards y = 0), but every update, you add some gravity (positive, towards y = 576), so eventually the upward jump stalls out and the character falls back to ground.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Let's write this out in code. Don't worry about the details today. We'll learn more about this and refine it later.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Change the code like so:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:code -->
+<pre class="wp-block-code"><code>function initializeGame() {
+
+  for (num = -1; num &lt; 8; num += 1) {
+    let blue_sky = makeSprite("Art/blue_sky.png");
+    blue_sky.position.set(game_width * num, 0);
+    stage.addChild(blue_sky);
+  }
+
+  for (num = -8; num &lt; 70; num += 1) {
+    let brick = makeSprite("Art/brick.png");
+    brick.anchor.set(0.5,1);
+    brick.position.set(120 * num, game_height);
+    brick.tint = pick(colors);
+    stage.addChild(brick);
+    bricks.push(brick);
+  }
+
+  mia = makeAnimatedSprite("Art/mia_animations.json", "run");
+  mia.anchor.set(0.5, 0.9);
+  mia.position.set(200, game_height - 40);
+  stage.addChild(mia);
+  mia.animationSpeed = 0.3;
+  mia.play();
+  <span class="has-inline-color has-vivid-red-color">mia.state = "running";
+  mia.y_velocity = 0;</span>
+}
+
+...
+...
+...
+
+function updateGame(diff) {
+
+  // Don't try to update the game until we've created Mia,
+  // or the game will crash.
+  if (mia == null) return;
+
+  // If the right key got pushed, move Mia to the right
+  if (key_down&#91;"ArrowRight"]) {
+    mia.x = mia.x + 7;
+    mia.scale.set(1,1);
+  }
+
+  // If the left key got pushed, move Mia to the left
+  if (key_down&#91;"ArrowLeft"]) {
+    mia.x = mia.x - 7;
+    mia.scale.set(-1,1);
+  }
+
+  <span class="has-inline-color has-vivid-red-color">// If the space bar got pushed, make Mia jump
+  if (key_down&#91;" "] &amp;&amp; mia.state == "running") {
+    mia.state = "jumping";
+    mia.y_velocity = -20;
+  }
+
+  // If Mia is jumping, move her upwards, use gravity to pull her downwards,
+  // and if she reaches the ground, stop the jump.
+  if (mia.state == "jumping") {
+    mia.y = mia.y + mia.y_velocity;
+    mia.y_velocity = mia.y_velocity + 0.8;
+    if (mia.y &gt; game_height - 40) {
+      mia.y = game_height - 40;
+      mia.y_velocity = 0;
+      mia.state = "running";
+    }
+  }</span>
+
+  followMia();
+}</code></pre>
+<!-- /wp:code -->
+
+<!-- wp:paragraph -->
+<p>Note the line "<meta charset="utf-8"><span class="has-inline-color has-black-color">key_down[" "] &amp;&amp; mia.state == "running"</span>. That's key_down, then <em>a single space between quotes</em>, which means the spacebar. That's also <em>two &amp; symbols</em>. It won't work with one.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>If the spacebar is pressed, Mia switches to jumping and her velocity makes her go up.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>When she's jumping, gravity gradually brings her back down, and if she hits our original ground height, she switches back to running.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:gallery {"linkTo":"none"} -->
+<figure class="wp-block-gallery has-nested-images columns-default is-cropped"><!-- wp:image {"id":166,"sizeSlug":"large","linkDestination":"none"} -->
+<figure class="wp-block-image size-large"><img src="https://www.alphazoollc.com/blog/wp-content/uploads/2022/01/mia_day_2.gif" alt="" class="wp-image-166"/></figure>
+<!-- /wp:image --></figure>
+<!-- /wp:gallery -->
+
+<!-- wp:paragraph -->
+<p></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Boom! You now have a platformer.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:gallery {"linkTo":"none"} -->
+<figure class="wp-block-gallery has-nested-images columns-default is-cropped"><!-- wp:image {"id":162,"sizeSlug":"large","linkDestination":"none"} -->
+<figure class="wp-block-image size-large"><img src="https://www.alphazoollc.com/blog/wp-content/uploads/2022/01/mario_hard.gif" alt="" class="wp-image-162"/></figure>
+<!-- /wp:image --></figure>
+<!-- /wp:gallery -->
+
+<!-- wp:paragraph -->
+<p></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Tomorrow we'll add falling bricks and death and stuff.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p></p>
+<!-- /wp:paragraph -->
